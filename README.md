@@ -1,4 +1,4 @@
-# eclub
+# 需求文档
 
 ## 1. 背景说明
 
@@ -101,7 +101,7 @@
    用户：用户可以查看社团职位
 
    管理员：只有会长可以修改职位及其职责
-
+   
 5. 社团添加
 
    管理员：系统管理员可以添加社团，支持文件形式(txt, excel)批量导入
@@ -116,22 +116,24 @@
 
 ## 4. 基本表设计
 
+ID采取雪花算法
+
 ### 4.1 用户表 user
 
 |    列名     |   类型   | 长度 | 主键 | 唯一 | 索引 | 外键 |    说明     |
 | :---------: | :------: | :--: | :--: | :--: | :--: | :--: | :---------: |
-|     id      |  bigint  |  32  |  √   |  √   |  √   |      |     ID      |
-|             |          |      |      |      |      |      |             |
+|     id      | varchar  |  64  |  √   |  √   |  √   |      |     ID      |
+|   open_id   | varchar  | 255  |      |      |      |      | 微信OPENID  |
 |    state    | tinyint  |  1   |      |      |      |      | 0正常/1禁用 |
 | create_time | datetime |  0   |      |      |      |      |  创建时间   |
 | update_time | datetime |  0   |      |      |      |      |  修改时间   |
-|  operator   |  bigint  |  32  |      |      |      |      |   操作者    |
+|  operator   | varchar  |  64  |      |      |      |      |   操作者    |
 
 ### 4.2 社团表 club
 
 |      列名      |   类型   | 长度 | 主键 | 唯一 | 索引 |  外键   |     说明      |
 | :------------: | :------: | :--: | :--: | :--: | :--: | :-----: | :-----------: |
-|       id       |  bigint  |  32  |  √   |  √   |  √   |         |      ID       |
+|       id       | varchar  |  64  |  √   |  √   |  √   |         |      ID       |
 |      name      | varchar  |  32  |      |  √   |  √   |         |   社团名称    |
 |  description   | varchar  | 255  |      |      |      |         |   社团简介    |
 |    logo_uri    | varchar  | 255  |      |      |      |         | logo/社徽地址 |
@@ -139,39 +141,39 @@
 |     state      | tinyint  |  1   |      |      |      |         |  0正常/1禁用  |
 |  create_time   | datetime |  0   |      |      |      |         |   创建时间    |
 |  update_time   | datetime |  0   |      |      |      |         |   修改时间    |
-|    operator    |  bigint  |  32  |      |      |      | user.id |    操作者     |
+|    operator    | varchar  |  64  |      |      |      | user.id |    操作者     |
 
 ### 4.3 角色表 role（职位）
 
 |    列名     |   类型   | 长度 | 主键 | 唯一 | 索引 |  外键   |    说明     |
 | :---------: | :------: | :--: | :--: | :--: | :--: | :-----: | :---------: |
-|     id      |  bigint  |  32  |  √   |  √   |  √   |         |     ID      |
-|    name     | varchar  |  32  |      |  √   |  √   |         |  职位名称   |
-| description | varchar  | 255  |      |      |      |         |  职位简介   |
+|     id      | varchar  |  64  |  √   |  √   |  √   |         |     ID      |
+|    name     | varchar  |  32  |      |  √   |  √   |         |  角色名称   |
+| description | varchar  | 255  |      |      |      |         |    描述     |
 |    state    | tinyint  |  1   |      |      |      |         | 0正常/1禁用 |
 | create_time | datetime |  0   |      |      |      |         |  创建时间   |
 | update_time | datetime |  0   |      |      |      |         |  修改时间   |
-|  operator   |  bigint  |  32  |      |      |      | user.id |   操作者    |
+|  operator   | varchar  |  64  |      |      |      | user.id |   操作者    |
 
 ### 4.4 用户_角色表 user_role
 
 |    列名     |   类型   | 长度 | 主键 | 唯一 | 索引 |  外键   |    说明     |
 | :---------: | :------: | :--: | :--: | :--: | :--: | :-----: | :---------: |
-|     id      |  bigint  |  32  |  √   |  √   |  √   |         |     ID      |
-|   user_id   |  bigint  |  32  |      |      |      | user.id |   用户ID    |
-|   role_id   |  bigint  |  32  |      |      |      | role.id |   角色ID    |
+|     id      | varchar  |  64  |  √   |  √   |  √   |         |     ID      |
+|   user_id   | varchar  |  64  |      |      |      | user.id |   用户ID    |
+|   role_id   | varchar  |  64  |      |      |      | role.id |   角色ID    |
 |    state    | tinyint  |  1   |      |      |      |         | 0正常/1禁用 |
 | create_time | datetime |  0   |      |      |      |         |  创建时间   |
 | update_time | datetime |  0   |      |      |      |         |  修改时间   |
-|  operator   |  bigint  |  32  |      |      |      | user.id |   操作者    |
+|  operator   | varchar  |  64  |      |      |      | user.id |   操作者    |
 
 ### 4.5 权限表 permission
 
 |    列名     |   类型   | 长度 | 主键 | 唯一 | 索引 |  外键   |     说明     |
 | :---------: | :------: | :--: | :--: | :--: | :--: | :-----: | :----------: |
-|     id      |  bigint  |  32  |  √   |  √   |  √   |         |      ID      |
-|    code     |  bigint  |  32  |      |      |      |         | 基于方法授权 |
-|    p_id     |  bigint  |  32  |      |      |      |         |    父菜单    |
+|     id      | varchar  |  64  |  √   |  √   |  √   |         |      ID      |
+|    code     | varchar  |  64  |      |      |      |         | 基于方法授权 |
+|    p_id     | varchar  |  64  |      |      |      |         |    父菜单    |
 |   is_menu   | tinyint  |  1   |      |      |      |         |  0是/1不是   |
 |    level    |   int    |  11  |      |      |      |         |     层级     |
 |    sort     |   int    |  11  |      |      |      |         |     顺序     |
@@ -179,54 +181,72 @@
 |    state    | tinyint  |  1   |      |      |      |         | 0正常/1禁用  |
 | create_time | datetime |  0   |      |      |      |         |   创建时间   |
 | update_time | datetime |  0   |      |      |      |         |   修改时间   |
-|  operator   |  bigint  |  32  |      |      |      | user.id |    操作者    |
+|  operator   | varchar  |  64  |      |      |      | user.id |    操作者    |
 
 ### 4.6 权限_角色表 permission_role
 
 |     列名      |   类型   | 长度 | 主键 | 唯一 | 索引 |     外键      |    说明     |
 | :-----------: | :------: | :--: | :--: | :--: | :--: | :-----------: | :---------: |
-|      id       |  bigint  |  32  |  √   |  √   |  √   |               |     ID      |
-| permission_id |  bigint  |  32  |      |      |      | permission.id |   权限ID    |
-|    role_id    |  bigint  |  32  |      |      |      |    role.id    |   角色ID    |
+|      id       | varchar  |  64  |  √   |  √   |  √   |               |     ID      |
+| permission_id | varchar  |  64  |      |      |      | permission.id |   权限ID    |
+|    role_id    | varchar  |  64  |      |      |      |    role.id    |   角色ID    |
 |     state     | tinyint  |  1   |      |      |      |               | 0正常/1禁用 |
 |  create_time  | datetime |  0   |      |      |      |               |  创建时间   |
 |  update_time  | datetime |  0   |      |      |      |               |  修改时间   |
-|   operator    |  bigint  |  32  |      |      |      |    user.id    |   操作者    |
+|   operator    | varchar  |  32  |      |      |      |    user.id    |   操作者    |
 
-### 4.7 用户_社团表 user_club
-
-|    列名     |   类型   | 长度 | 主键 | 唯一 | 索引 |  外键   |    说明     |
-| :---------: | :------: | :--: | :--: | :--: | :--: | :-----: | :---------: |
-|     id      |  bigint  |  32  |  √   |  √   |  √   |         |     ID      |
-|   user_id   |  bigint  |  32  |      |      |      | user.id |   用户ID    |
-|   club_id   |  bigint  |  32  |      |      |      | club.id |   社团ID    |
-|    year     |   int    |  4   |      |      |      |         |    年份     |
-|    state    | tinyint  |  1   |      |      |      |         | 0正常/1禁用 |
-| create_time | datetime |  0   |      |      |      |         |  创建时间   |
-| update_time | datetime |  0   |      |      |      |         |  修改时间   |
-|  operator   |  bigint  |  32  |      |      |      | user.id |   操作者    |
-
-### 4.8 活动表 activity
+### 4.7 活动表 activity
 
 |    列名     |   类型   | 长度 | 主键 | 唯一 | 索引 |  外键   |     说明      |
 | :---------: | :------: | :--: | :--: | :--: | :--: | :-----: | :-----------: |
-|     id      |  bigint  |  32  |  √   |  √   |  √   |         |      ID       |
-|    title    |  bigint  |  32  |      |      |      |         |   活动标题    |
+|     id      | varchar  |  64  |  √   |  √   |  √   |         |      ID       |
+|    title    | varchar  |  32  |      |      |      |         |   活动标题    |
 |    time     | datetime |  0   |      |      |      |         |   活动时间    |
 |    area     | varchar  | 255  |      |      |      |         |   活动地点    |
 | description | varchar  | 512  |      |      |      |         |   活动描述    |
-|   club_id   |  bigint  |  32  |      |      |      | club.id |    社团ID     |
-|   user_id   |  bigint  |  32  |      |      |      | user.id |   发布人ID    |
+|   club_id   | varchar  |  64  |      |      |      | club.id |    社团ID     |
+|   user_id   | varchar  |  64  |      |      |      | user.id |   发布人ID    |
 |   is_top    | tinyint  |  1   |      |      |      |         | 0置顶/1不置顶 |
 |    state    | tinyint  |  1   |      |      |      |         |  0正常/1禁用  |
 | create_time | datetime |  0   |      |      |      |         |   创建时间    |
 | update_time | datetime |  0   |      |      |      |         |   修改时间    |
-|  operator   |  bigint  |  32  |      |      |      | user.id |    操作者     |
+|  operator   | varchar  |  64  |      |      |      | user.id |    操作者     |
 
-在varchar长度接近256时，varchar长度设置成255的好处：
+### 4.8 社团人员表 user_club
 
-[链接跳转](http://leixiaolong.lofter.com/post/1d8e3da1_12e9c81df)
+|    列名     |   类型   | 长度 | 主键 | 唯一 | 索引 |  外键   |         说明          |
+| :---------: | :------: | :--: | :--: | :--: | :--: | :-----: | :-------------------: |
+|     id      | varchar  |  64  |  √   |  √   |  √   |         |          ID           |
+|   user_id   | varchar  |  64  |      |      |      | user.id |        用户ID         |
+|   club_id   | varchar  |  64  |      |      |      | club.id |        社团ID         |
+|    year     |   int    |  4   |      |      |      |         |         年份          |
+|    state    | tinyint  |  1   |      |      |      |         | 0正常/1禁用/2未支付/3 |
+| create_time | datetime |  0   |      |      |      |         |       创建时间        |
+| update_time | datetime |  0   |      |      |      |         |       修改时间        |
+|  operator   | varchar  |  64  |      |      |      | user.id |        操作者         |
 
-1. 方便InnoDB建索引，对于 MyISAM，可以对前 1000 个字节做索引，对于 InnoDB，则只有 767 字节。（来源依据: 255X3=765）
+### 4.9 社团职位表 department
 
-2. 少申请一个字节，记录字符串长度，一个8位的tinyint，可以表示的无符号数值的范围是，0-255，如果长度超过了255，需要再申请个字节。
+|    列名     |   类型   | 长度 | 主键 | 唯一 | 索引 |  外键   |    说明     |
+| :---------: | :------: | :--: | :--: | :--: | :--: | :-----: | :---------: |
+|     id      | varchar  |  64  |  √   |  √   |  √   |         |     ID      |
+|    name     | varchar  |  64  |      |      |      |         |  职位名称   |
+| description | varchar  | 255  |      |      |      |         |  职位描述   |
+|   club_id   | varchar  |  64  |      |      |      | club.id |   社团ID    |
+|    state    | tinyint  |  1   |      |      |      |         | 0正常/1禁用 |
+| create_time | datetime |  0   |      |      |      |         |  创建时间   |
+| update_time | datetime |  0   |      |      |      |         |  修改时间   |
+|  operator   | varchar  |  64  |      |      |      | user.id |   操作者    |
+
+### 4.10 社团干部表
+
+|     列名      |   类型   | 长度 | 主键 | 唯一 | 索引 |     外键      |    说明     |
+| :-----------: | :------: | :--: | :--: | :--: | :--: | :-----------: | :---------: |
+|      id       | varchar  |  64  |  √   |  √   |  √   |               |     ID      |
+| department_id | varchar  |  64  |      |      |      | department.id |   职位ID    |
+|    club_id    | varchar  |  64  |      |      |      |    user.id    |   用户ID    |
+|     year      |   int    |  4   |      |      |      |               |    年份     |
+|     state     | tinyint  |  1   |      |      |      |               | 0正常/1禁用 |
+|  create_time  | datetime |  0   |      |      |      |               |  创建时间   |
+|  update_time  | datetime |  0   |      |      |      |               |  修改时间   |
+|   operator    | varchar  |  64  |      |      |      |    user.id    |   操作者    |

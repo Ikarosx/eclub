@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /*
  Navicat Premium Data Transfer
 
@@ -286,7 +285,7 @@ CREATE TABLE `user_role`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;
-=======
+
 /*
  Navicat Premium Data Transfer
 
@@ -574,4 +573,3 @@ CREATE TABLE `user_role`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;
->>>>>>> 62d76af034847236ac7c1c6910b9e047c018a7ca

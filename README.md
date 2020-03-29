@@ -132,6 +132,7 @@ ID采取雪花算法
 |    class     | varcahr  | 255  |      |      |      |      |     班级     |
 |      wx      | varchar  |  64  |      |      |      |      |    微信号    |
 |      qq      | varchar  |  32  |      |      |      |      |     QQ号     |
+|    email     | varchar  |  64  |      |      |      |      |     邮件     |
 |   open_id    | varchar  | 255  |      |      |      |      |  微信OPENID  |
 |    state     | tinyint  |  1   |      |      |      |      | 0正常/1禁用  |
 | create_time  | datetime |  0   |      |      |      |      |   创建时间   |

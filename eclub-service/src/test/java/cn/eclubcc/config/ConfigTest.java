@@ -9,10 +9,10 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @author Ikaros
  * @date 2020/3/28 9:54
  */
-@SpringBootTest
-@RunWith(SpringRunner.class)
+//@SpringBootTest
+//@RunWith(SpringRunner.class)
 public class ConfigTest {
-  @Test
-  public void converterTest() {
-  }
+//  @Test
+//  public void converterTest() {
+//  }
 }

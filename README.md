@@ -120,14 +120,23 @@ ID采取雪花算法
 
 ### 4.1 用户表 user
 
-|    列名     |   类型   | 长度 | 主键 | 唯一 | 索引 | 外键 |    说明     |
-| :---------: | :------: | :--: | :--: | :--: | :--: | :--: | :---------: |
-|     id      | varchar  |  64  |  √   |  √   |  √   |      |     ID      |
-|   open_id   | varchar  | 255  |      |      |      |      | 微信OPENID  |
-|    state    | tinyint  |  1   |      |      |      |      | 0正常/1禁用 |
-| create_time | datetime |  0   |      |      |      |      |  创建时间   |
-| update_time | datetime |  0   |      |      |      |      |  修改时间   |
-|  operator   | varchar  |  64  |      |      |      |      |   操作者    |
+|     列名     |   类型   | 长度 | 主键 | 唯一 | 索引 | 外键 |     说明     |
+| :----------: | :------: | :--: | :--: | :--: | :--: | :--: | :----------: |
+|      id      | varchar  |  64  |  √   |  √   |  √   |      |      ID      |
+|  student_id  | varchar  |  32  |      |      |      |      |     学号     |
+|   username   | varchar  |  32  |      |  √   |      |      |    用户名    |
+|   password   | varchar  | 255  |      |      |      |      |  Bcrypt加密  |
+|   nickname   | varchar  |  32  |      |      |      |      |     昵称     |
+| user_profile | varchar  | 255  |      |      |      |      | 用户头像地址 |
+|    phone     | varchar  |  11  |      |      |      |      |    手机号    |
+|    class     | varcahr  | 255  |      |      |      |      |     班级     |
+|      wx      | varchar  |  64  |      |      |      |      |    微信号    |
+|      qq      | varchar  |  32  |      |      |      |      |     QQ号     |
+|   open_id    | varchar  | 255  |      |      |      |      |  微信OPENID  |
+|    state     | tinyint  |  1   |      |      |      |      | 0正常/1禁用  |
+| create_time  | datetime |  0   |      |      |      |      |   创建时间   |
+| update_time  | datetime |  0   |      |      |      |      |   修改时间   |
+|   operator   | varchar  |  64  |      |      |      |      |    操作者    |
 
 ### 4.2 社团表 club
 
@@ -169,19 +178,19 @@ ID采取雪花算法
 
 ### 4.5 权限表 permission
 
-|    列名     |   类型   | 长度 | 主键 | 唯一 | 索引 |  外键   |     说明     |
-| :---------: | :------: | :--: | :--: | :--: | :--: | :-----: | :----------: |
-|     id      | varchar  |  64  |  √   |  √   |  √   |         |      ID      |
-|    code     | varchar  |  64  |      |      |      |         | 基于方法授权 |
-|    p_id     | varchar  |  64  |      |      |      |         |    父菜单    |
-|   is_menu   | tinyint  |  1   |      |      |      |         |  0是/1不是   |
-|    level    |   int    |  11  |      |      |      |         |     层级     |
-|    sort     |   int    |  11  |      |      |      |         |     顺序     |
-|  icon_uri   | varchar  |  32  |      |      |      |         |   iconUri    |
-|    state    | tinyint  |  1   |      |      |      |         | 0正常/1禁用  |
-| create_time | datetime |  0   |      |      |      |         |   创建时间   |
-| update_time | datetime |  0   |      |      |      |         |   修改时间   |
-|  operator   | varchar  |  64  |      |      |      | user.id |    操作者    |
+|    列名     |   类型   | 长度 | 主键 | 唯一 | 索引 |  外键   |    说明     |
+| :---------: | :------: | :--: | :--: | :--: | :--: | :-----: | :---------: |
+|     id      | varchar  |  64  |  √   |  √   |  √   |         |     ID      |
+|    code     | varchar  |  64  |      |      |      |         |  授权代码   |
+|  parent_id  | varchar  |  64  |      |      |      |         |    父级     |
+|   is_menu   | tinyint  |  1   |      |      |      |         |  0是/1不是  |
+|    level    |   int    |  11  |      |      |      |         |    层级     |
+|    sort     |   int    |  11  |      |      |      |         |    顺序     |
+|  icon_uri   | varchar  |  32  |      |      |      |         |   iconUri   |
+|    state    | tinyint  |  1   |      |      |      |         | 0正常/1禁用 |
+| create_time | datetime |  0   |      |      |      |         |  创建时间   |
+| update_time | datetime |  0   |      |      |      |         |  修改时间   |
+|  operator   | varchar  |  64  |      |      |      | user.id |   操作者    |
 
 ### 4.6 权限_角色表 permission_role
 
@@ -200,7 +209,7 @@ ID采取雪花算法
 |    列名     |   类型   | 长度 | 主键 | 唯一 | 索引 |  外键   |     说明      |
 | :---------: | :------: | :--: | :--: | :--: | :--: | :-----: | :-----------: |
 |     id      | varchar  |  64  |  √   |  √   |  √   |         |      ID       |
-|    title    | varchar  |  32  |      |      |      |         |   活动标题    |
+|    title    | varchar  |  64  |      |      |      |         |   活动标题    |
 |    time     | datetime |  0   |      |      |      |         |   活动时间    |
 |    area     | varchar  | 255  |      |      |      |         |   活动地点    |
 | description | varchar  | 512  |      |      |      |         |   活动描述    |

@@ -22,7 +22,7 @@
         <!-- swagger -->
         <springfox-swagger.version>2.9.2</springfox-swagger.version>
         <!-- druid -->
-        <druid.version>1.1.21</druid.version>
+        <druid.version>1.1.20</druid.version>
         <!-- fastjson -->
         <fastjson.version>1.2.62</fastjson.version>
         <!-- mybatis -->
@@ -39,6 +39,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+<exclusions>
+    <exclusion>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-logging</artifactId>
+    </exclusion>
+</exclusions>
         </dependency>
         <!-- Security -->
         <dependency>
@@ -58,6 +64,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
         <!-- lombok -->
         <dependency>
@@ -77,7 +84,7 @@
             <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
+            <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
         </dependency>
@@ -122,4 +129,12 @@
         </dependency>
     
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -1,8 +1,10 @@
 package cn.eclubcc.service.impl;
 
 import cn.eclubcc.common.exception.response.CommonCodeEnum;
+import cn.eclubcc.dao.PermissionRepository;
 import cn.eclubcc.dao.UserRepository;
 import cn.eclubcc.pojo.User;
+import cn.eclubcc.pojo.UserExtension;
 import cn.eclubcc.pojo.http.request.UserQueryParam;
 import cn.eclubcc.pojo.http.response.QueryResponseResult;
 import cn.eclubcc.pojo.http.response.QueryResult;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class UserServiceImpl implements UserService {
   @Autowired UserRepository userRepository;
+  @Autowired PermissionRepository permissionRepository;
 
   @Override
   public ResponseResult insertUser(User user) {
@@ -74,5 +77,23 @@ public class UserServiceImpl implements UserService {
     queryResult.setTotal(queryResult.getTotal());
     queryResult.setTotalPage(queryResult.getTotalPage());
     return new QueryResponseResult(CommonCodeEnum.SUCCESS, queryResult);
+  }
+
+  @Override
+  public UserExtension getUserExtensionByUsername(String username) {
+    User user = userRepository.findByUsername(username);
+    UserExtension userExtension = new UserExtension();
+    BeanUtils.copyProperties(user, userExtension);
+    userExtension.setPermissions(permissionRepository.listPermissions(user.getId()));
+    return userExtension;
+  }
+
+  @Override
+  public UserExtension getUserExtensionByOpenId(String openId) {
+    User user = userRepository.findByOpenId(openId);
+    UserExtension userExtension = new UserExtension();
+    BeanUtils.copyProperties(user, userExtension);
+    userExtension.setPermissions(permissionRepository.listPermissions(user.getId()));
+    return userExtension;
   }
 }

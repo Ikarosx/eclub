@@ -1,15 +1,15 @@
 package cn.eclubcc.controller.impl;
 
+import cn.eclubcc.common.exception.response.CommonCodeEnum;
 import cn.eclubcc.controller.UserController;
 import cn.eclubcc.pojo.User;
 import cn.eclubcc.pojo.http.request.UserQueryParam;
 import cn.eclubcc.pojo.http.response.ResponseResult;
 import cn.eclubcc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,13 +24,15 @@ public class UserControllerImpl implements UserController {
   @Autowired private UserService userService;
 
   @Override
-  @PostMapping
-  public ResponseResult insertUser(@RequestBody @Validated User user) {
-    user.setId(null);
-    user.setCreateTime(new Date());
-    user.setUpdateTime(user.getCreateTime());
+  @GetMapping
+  @PreAuthorize("hasAuthority('eclub_admin_user_add')")
+  public ResponseResult insertUser(User user) {
+    // user.setId(null);
+    // user.setCreateTime(new Date());
+    // user.setUpdateTime(user.getCreateTime());
     // 加密 TODO
-    return userService.insertUser(user);
+    return new ResponseResult(CommonCodeEnum.SUCCESS);
+    // return userService.insertUser(user);
   }
 
   @Override

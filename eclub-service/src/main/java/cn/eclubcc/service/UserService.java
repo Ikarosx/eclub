@@ -1,6 +1,7 @@
 package cn.eclubcc.service;
 
 import cn.eclubcc.pojo.User;
+import cn.eclubcc.pojo.UserExtension;
 import cn.eclubcc.pojo.http.request.UserQueryParam;
 import cn.eclubcc.pojo.http.response.ResponseResult;
 
@@ -18,4 +19,8 @@ public interface UserService {
   ResponseResult deleteUserByIds(List<String> ids);
 
   ResponseResult listUsersByPage(Integer page, Integer size, UserQueryParam userQueryParam);
+
+  UserExtension getUserExtensionByUsername(String username);
+
+  UserExtension getUserExtensionByOpenId(String openId);
 }

@@ -42,6 +42,7 @@ public class User {
   private String qq;
 
   private String email;
+  private String sessionKey;
   @NotEmpty private String nickname;
   @NotEmpty private String openId;
   /** 0正常/1禁用 */

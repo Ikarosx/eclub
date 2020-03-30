@@ -1,5 +1,10 @@
 server:
     port: 9000
+    servlet:
+        session:
+            timeout: 7200
+            cookie:
+                max-age: 3600
 spring:
     application:
         name: eclub-service

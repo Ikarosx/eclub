@@ -6,8 +6,11 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.MediaType;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Ikaros
@@ -21,6 +24,10 @@ public class EClubFastJsonConfig {
     FastJsonConfig fastJsonConfig = new FastJsonConfig();
     // 时间格式转换
     fastJsonConfig.setDateFormat("yyyy-MM-dd HH:mm:ss");
+    List<MediaType> fastMediaTypes = new ArrayList<>();
+    // 中文乱码
+    fastMediaTypes.add(MediaType.APPLICATION_JSON);
+    fastJsonHttpMessageConverter.setSupportedMediaTypes(fastMediaTypes);
     fastJsonConfig.setCharset(Charset.forName("UTF-8"));
     fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
     fastJsonHttpMessageConverter.setFastJsonConfig(fastJsonConfig);

@@ -1,14 +1,10 @@
 server:
-<<<<<<< HEAD
     port: 9000
     servlet:
         session:
             timeout: 7200
             cookie:
                 max-age: 3600
-=======
-    port: 8090
->>>>>>> 891dbac1af2bd4dab5dab4711cdb1634c9389653
 spring:
     application:
         name: eclub-service
@@ -25,11 +21,7 @@ spring:
             testOnBorrow: true #申请连接时检测连接是否有效
             testOnReturn: false #归还连接时检测连接是否有效
             timeBetweenEvictionRunsMillis: 60000 #配置间隔检测连接是否有效的时间（ms）
-<<<<<<< HEAD
-            minEvictableIdleTimeMillis: 300000  #连接在连接池的最小生存时间（ms）
-=======
             minEvictableIdleTimeMillis: 300000  #连接在连接池的最小生存时间（ms）
     http:
         encoding:
             force-response: true
->>>>>>> 891dbac1af2bd4dab5dab4711cdb1634c9389653

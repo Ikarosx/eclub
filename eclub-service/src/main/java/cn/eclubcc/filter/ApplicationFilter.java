@@ -24,6 +24,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 /**
+ * 此过滤器用于处理小程序和后台不同的登陆逻辑
+ * 首先从session中获取user
+ * 获取到放行
+ * 获取不到说明没有认证
+ * 判断是否是小程序的请求
+ * 如果是小程序，说明是服务器session过期导致获取不到
+ * 则从数据库拿出
  * @author Ikaros
  * @date 2020/3/30 14:49
  */

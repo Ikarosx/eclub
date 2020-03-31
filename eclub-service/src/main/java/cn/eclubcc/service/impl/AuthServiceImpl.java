@@ -3,20 +3,27 @@ package cn.eclubcc.service.impl;
 import cn.eclubcc.common.exception.ExceptionCast;
 import cn.eclubcc.common.exception.response.AuthCodeEnum;
 import cn.eclubcc.common.exception.response.CommonCodeEnum;
+import cn.eclubcc.common.util.Snowflake;
+import cn.eclubcc.dao.UserRepository;
 import cn.eclubcc.pojo.User;
 import cn.eclubcc.pojo.auth.request.UserInfo;
 import cn.eclubcc.pojo.auth.response.Jscode2SessionResponse;
 import cn.eclubcc.pojo.auth.response.OpenIdResponse;
 import cn.eclubcc.pojo.http.response.ResponseResult;
 import cn.eclubcc.service.AuthService;
-import cn.eclubcc.service.UserService;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -43,7 +50,11 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private RestTemplate restTemplate;
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private AuthenticationManager authenticationManager;
     
     @Override
     public ResponseResult getOpenIdByCode(String code) {
@@ -103,8 +114,22 @@ public class AuthServiceImpl implements AuthService {
         user.setNickname(userInfo.getNickName());
         user.setUserProfile(userInfo.getAvatarUrl());
         // 更新数据库信息
-        userService.updateUserByOpenId(user);
-        request.getSession().setAttribute("user", user);
+        User result = userRepository.findByOpenId(user.getOpenId());
+        if (result == null) {
+            result = new User();
+            result.setUsername(String.valueOf(Snowflake.nextId()));
+            // 截取username后6位为初始密码
+            String password = StringUtils.substring(result.getUsername(), -6);
+            // 密码加密
+            result.setPassword(passwordEncoder.encode(password));
+        }
+        BeanUtils.copyProperties(user, result);
+        User save = userRepository.save(result);
+        request.getSession().setAttribute("user", save);
+        // 加入授权
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(save.getUsername(), save.getPassword());
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         return new ResponseResult(CommonCodeEnum.SUCCESS);
     }
 }

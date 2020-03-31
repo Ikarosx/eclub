@@ -11,7 +11,7 @@ import java.util.List;
  * @author Ikaros
  * @date 2020/3/28 15:43
  */
-@Api(value = "社团接口")
+@Api(value = "社团接口", tags = "社团接口")
 public interface ClubController {
   
   @ApiOperation(value = "添加社团")

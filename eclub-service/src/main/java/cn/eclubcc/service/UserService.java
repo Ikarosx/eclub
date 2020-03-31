@@ -12,15 +12,21 @@ import java.util.List;
  * @date 2020/3/29 12:14
  */
 public interface UserService {
-  ResponseResult insertUser(User user);
-
-  ResponseResult deleteUser(String id);
-
-  ResponseResult deleteUserByIds(List<String> ids);
-
-  ResponseResult listUsersByPage(Integer page, Integer size, UserQueryParam userQueryParam);
-
-  UserExtension getUserExtensionByUsername(String username);
-
-  UserExtension getUserExtensionByOpenId(String openId);
+    ResponseResult insertUser(User user);
+    
+    ResponseResult updateUser(User user);
+    
+    ResponseResult getUserByOpenId(String openId);
+    
+    ResponseResult deleteUser(String id);
+    
+    ResponseResult deleteUserByIds(List<String> ids);
+    
+    ResponseResult listUsersByPage(Integer page, Integer size, UserQueryParam userQueryParam);
+    
+    UserExtension getUserExtensionByUsername(String username);
+    
+    UserExtension getUserExtensionByOpenId(String openId);
+    
+    ResponseResult updateUserByOpenId(User user);
 }

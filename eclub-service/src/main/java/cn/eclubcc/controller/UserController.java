@@ -12,7 +12,7 @@ import java.util.List;
  * @author Ikaros
  * @date 2020/3/29 13:20
  */
-@Api(value = "用户接口")
+@Api(value = "用户接口", tags = "用户接口")
 public interface UserController {
   @ApiOperation(value = "添加用户")
   ResponseResult insertUser(User user);

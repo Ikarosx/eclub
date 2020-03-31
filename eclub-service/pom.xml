@@ -32,6 +32,7 @@
         <pagehelper-spring-boot.version>1.2.12</pagehelper-spring-boot.version>
         <!-- guava -->
         <guava.version>24.0-jre</guava.version>
+        <redis.version>2.2.3.RELEASE</redis.version>
     </properties>
     <dependencies>
         <!-- SpringBootDependencies版本控制 -->
@@ -50,6 +51,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
+        <!-- Redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>${redis.version}</version>
+        </dependency>
+        <!-- MySQL -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -128,7 +136,6 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
-    
     </dependencies>
     <build>
         <plugins>

@@ -1,5 +1,6 @@
 package cn.eclubcc.common.exception;
 
+import cn.eclubcc.common.exception.response.AuthCodeEnum;
 import cn.eclubcc.common.exception.response.CommonCodeEnum;
 import cn.eclubcc.common.exception.response.ResultCode;
 import cn.eclubcc.pojo.http.response.ResponseResult;
@@ -34,7 +35,7 @@ public class ExceptionCatch {
     builder.put(
         DataIntegrityViolationException.class, CommonCodeEnum.DATA_INTEGRITY_VIOLATION_EXCEPTION);
     builder.put(MethodArgumentNotValidException.class, CommonCodeEnum.INVALID_PARAM);
-    builder.put(AccessDeniedException.class, CommonCodeEnum.ACCESS_DENIED_EXCEPTION);
+    builder.put(AccessDeniedException.class, AuthCodeEnum.ACCESS_DENIED_EXCEPTION);
   }
 
   /**

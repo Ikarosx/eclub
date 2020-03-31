@@ -1,0 +1,448 @@
+= EClub api文档
+
+
+[[_overview]]
+== 概览
+EClub 描述
+
+
+=== 版本信息
+[%hardbreaks]
+__版本__ : 1.0
+
+
+=== URI scheme
+[%hardbreaks]
+__域名__ : 127.0.0.1:9000
+__基础路径__ : /
+
+
+=== 标签
+
+* club-controller-impl : Club Controller Impl
+* user-controller-impl : User Controller Impl
+
+
+
+
+[[_paths]]
+== 资源
+
+[[_club-controller-impl_resource]]
+=== Club-controller-impl
+Club Controller Impl
+
+
+[[_insertclubusingget]]
+==== 添加社团
+....
+GET /club
+....
+
+
+===== 参数
+
+[options="header", cols=".^2,.^3,.^4"]
+|===
+|类型|名称|类型
+|**Query**|**createTime** +
+__可选__|string (date-time)
+|**Query**|**description** +
+__可选__|string
+|**Query**|**id** +
+__可选__|string
+|**Query**|**logoUri** +
+__可选__|string
+|**Query**|**name** +
+__可选__|string
+|**Query**|**operator** +
+__可选__|string
+|**Query**|**regulationUri** +
+__可选__|string
+|**Query**|**state** +
+__可选__|integer (int32)
+|**Query**|**updateTime** +
+__可选__|string (date-time)
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|<<_responseresult,ResponseResult>>
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|**404**|Not Found|无内容
+|===
+
+
+===== 生成
+
+* `*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/club
+----
+
+
+====== 请求 query
+[source,json]
+----
+{
+  "createTime" : "string",
+  "description" : "string",
+  "id" : "string",
+  "logoUri" : "string",
+  "name" : "string",
+  "operator" : "string",
+  "regulationUri" : "string",
+  "state" : 0,
+  "updateTime" : "string"
+}
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+{
+  "code" : 0,
+  "message" : "string",
+  "success" : true
+}
+----
+
+
+[[_user-controller-impl_resource]]
+=== User-controller-impl
+User Controller Impl
+
+
+[[_insertuserusingget]]
+==== 添加用户
+....
+GET /user
+....
+
+
+===== 参数
+
+[options="header", cols=".^2,.^3,.^4"]
+|===
+|类型|名称|类型
+|**Query**|**classGrade** +
+__可选__|string
+|**Query**|**createTime** +
+__可选__|string (date-time)
+|**Query**|**email** +
+__可选__|string
+|**Query**|**id** +
+__可选__|string
+|**Query**|**nickname** +
+__可选__|string
+|**Query**|**openId** +
+__可选__|string
+|**Query**|**operator** +
+__可选__|string
+|**Query**|**password** +
+__可选__|string
+|**Query**|**phone** +
+__可选__|string
+|**Query**|**qq** +
+__可选__|string
+|**Query**|**sessionKey** +
+__可选__|string
+|**Query**|**state** +
+__可选__|integer (int32)
+|**Query**|**studentId** +
+__可选__|string
+|**Query**|**updateTime** +
+__可选__|string (date-time)
+|**Query**|**userProfile** +
+__可选__|string
+|**Query**|**username** +
+__可选__|string
+|**Query**|**wx** +
+__可选__|string
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|<<_responseresult,ResponseResult>>
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|**404**|Not Found|无内容
+|===
+
+
+===== 生成
+
+* `*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/user
+----
+
+
+====== 请求 query
+[source,json]
+----
+{
+  "classGrade" : "string",
+  "createTime" : "string",
+  "email" : "string",
+  "id" : "string",
+  "nickname" : "string",
+  "openId" : "string",
+  "operator" : "string",
+  "password" : "string",
+  "phone" : "string",
+  "qq" : "string",
+  "sessionKey" : "string",
+  "state" : 0,
+  "studentId" : "string",
+  "updateTime" : "string",
+  "userProfile" : "string",
+  "username" : "string",
+  "wx" : "string"
+}
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+{
+  "code" : 0,
+  "message" : "string",
+  "success" : true
+}
+----
+
+
+[[_deleteuserbyidsusingdelete]]
+==== 通过ID列表删除用户列表
+....
+DELETE /user
+....
+
+
+===== 参数
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|类型|名称|说明|类型
+|**Body**|**ids** +
+__必填__|ids|< string > array
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|<<_responseresult,ResponseResult>>
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|===
+
+
+===== 生成
+
+* `*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/user
+----
+
+
+====== 请求 body
+[source,json]
+----
+[ "string" ]
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+{
+  "code" : 0,
+  "message" : "string",
+  "success" : true
+}
+----
+
+
+[[_listusersbypageusingget]]
+==== 分页查询用户
+....
+GET /user/list/{page}/{size}
+....
+
+
+===== 参数
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|类型|名称|说明|类型
+|**Path**|**page** +
+__必填__|page|integer (int32)
+|**Path**|**size** +
+__必填__|size|integer (int32)
+|**Query**|**userQueryParam** +
+__必填__|userQueryParam|string
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|<<_responseresult,ResponseResult>>
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|**404**|Not Found|无内容
+|===
+
+
+===== 生成
+
+* `*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/user/list/0/0
+----
+
+
+====== 请求 query
+[source,json]
+----
+{
+  "userQueryParam" : "string"
+}
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+{
+  "code" : 0,
+  "message" : "string",
+  "success" : true
+}
+----
+
+
+[[_deleteuserusingdelete]]
+==== 通过ID删除用户
+....
+DELETE /user/{id}
+....
+
+
+===== 参数
+
+[options="header", cols=".^2,.^3,.^9,.^4"]
+|===
+|类型|名称|说明|类型
+|**Path**|**id** +
+__必填__|id|string
+|===
+
+
+===== 响应
+
+[options="header", cols=".^2,.^14,.^4"]
+|===
+|HTTP代码|说明|类型
+|**200**|OK|<<_responseresult,ResponseResult>>
+|**204**|No Content|无内容
+|**401**|Unauthorized|无内容
+|**403**|Forbidden|无内容
+|===
+
+
+===== 生成
+
+* `*/*`
+
+
+===== HTTP请求示例
+
+====== 请求 path
+----
+/user/string
+----
+
+
+===== HTTP响应示例
+
+====== 响应 200
+[source,json]
+----
+{
+  "code" : 0,
+  "message" : "string",
+  "success" : true
+}
+----
+
+
+
+
+[[_definitions]]
+== 定义
+
+[[_responseresult]]
+=== ResponseResult
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|名称|说明|类型
+|**code** +
+__可选__|**样例** : `0`|integer (int32)
+|**message** +
+__可选__|**样例** : `"string"`|string
+|**success** +
+__可选__|**样例** : `true`|boolean
+|===
+
+
+
+
+

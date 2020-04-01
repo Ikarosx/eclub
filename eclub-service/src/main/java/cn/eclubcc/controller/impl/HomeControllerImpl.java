@@ -3,10 +3,12 @@ package cn.eclubcc.controller.impl;
 import cn.eclubcc.common.exception.response.CommonCodeEnum;
 import cn.eclubcc.common.util.HomeCacheUtil;
 import cn.eclubcc.controller.HomeController;
+import cn.eclubcc.pojo.Club;
 import cn.eclubcc.pojo.http.response.QueryResponseResult;
 import cn.eclubcc.pojo.http.response.QueryResult;
 import cn.eclubcc.pojo.http.response.ResponseResult;
 import cn.eclubcc.service.HomeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +20,7 @@ import java.util.List;
 /**
  * author: markeNick
  */
+@Slf4j
 @RestController
 @RequestMapping("/home")
 public class HomeControllerImpl implements HomeController {
@@ -27,9 +30,9 @@ public class HomeControllerImpl implements HomeController {
 
     @Override
     @GetMapping("/clubList/{page}")
-    public ResponseResult home(@PathVariable Integer page) throws InterruptedException{
-        
-        List<Object> list = HomeCacheUtil.getCacheOfClubList(page);
+    public ResponseResult queryClubList(@PathVariable Integer page) throws InterruptedException{
+        System.out.println("=====> queryClubList");
+        List list = HomeCacheUtil.getCacheOfClubList(page);
 
         QueryResult<Object> queryResult = new QueryResult<>();
         queryResult.setList(list);

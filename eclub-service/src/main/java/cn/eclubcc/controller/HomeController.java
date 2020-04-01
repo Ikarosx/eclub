@@ -9,6 +9,6 @@ import java.util.List;
 @Api(value = "首页接口", tags = "首页接口")
 public interface HomeController {
 
-    @ApiOperation(value = "首页数据")
-    ResponseResult home(Integer page) throws InterruptedException;
+    @ApiOperation(value = "社团列表数据")
+    ResponseResult queryClubList(Integer page) throws InterruptedException;
 }

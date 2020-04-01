@@ -1,6 +1,8 @@
 package cn.eclubcc.common.util;
 
+import cn.eclubcc.pojo.Club;
 import cn.eclubcc.service.impl.HomeServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
@@ -11,17 +13,14 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * author:markeNick
  */
+@Slf4j
 public class HomeCacheUtil extends RedisUtil{
     // 首页缓存基础时间 -- 1分钟
     public static final long BASE_EXPIRE = 60000;
 
     public static final int CLUBLIST_LIMIT = 10;
 
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
 
-    @Autowired
-    private static RedisUtil redisUtil;
 
     @Autowired
     private static HomeServiceImpl homeService;
@@ -34,9 +33,9 @@ public class HomeCacheUtil extends RedisUtil{
      * @return
      * author: markeNick
      */
-    public static boolean setCacheByList(String key, List<Object> list, int time) {
-
-        return redisUtil.lSet(key, list, BASE_EXPIRE * time);
+    public static boolean setCacheByList(String key, List list, int time) {
+        System.out.println("=====> setCacheByList");
+        return RedisUtil.lSet(key, list, BASE_EXPIRE * time);
     }
 
     /**
@@ -46,11 +45,14 @@ public class HomeCacheUtil extends RedisUtil{
      * @throws InterruptedException
      * author: markeNick
      */
-    public static List<Object> getCacheOfClubList(int page) throws InterruptedException{
+    public static List getCacheOfClubList(int page) throws InterruptedException{
+
+        System.out.println("=====> getCacheOfClubList");
+
         String clubList_page = "clubList-page" + page;
 
         // 从缓存中读取数据
-        List<Object> result = redisUtil.lGet(clubList_page, 0, -1);
+        List result = RedisUtil.lGet(clubList_page, 0, -1);
 
         if(result != null) {
             return result;
@@ -59,12 +61,14 @@ public class HomeCacheUtil extends RedisUtil{
         ReentrantLock lock = new ReentrantLock();
         // 成功获取锁，则从数据库获取数据
         if(lock.tryLock()) {
+            System.out.println("=====> lock.tryLock() yes");
             // 从数据库获取数据
             result = homeService.queryClubListLimit(page, CLUBLIST_LIMIT);
 
             // 更新缓存
             if(result != null) {
                 setCacheByList(clubList_page, result, 10);
+                System.out.println("===========>" + result.get(0));
             }
 
             lock.unlock();

@@ -1,11 +1,13 @@
 package cn.eclubcc.controller.impl;
 
+import cn.eclubcc.common.util.SecurityUtils;
 import cn.eclubcc.controller.UserController;
 import cn.eclubcc.pojo.User;
 import cn.eclubcc.pojo.http.request.UserQueryParam;
 import cn.eclubcc.pojo.http.response.QueryResponseResult;
 import cn.eclubcc.pojo.http.response.ResponseResult;
 import cn.eclubcc.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,13 +19,12 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 参数校验/更新 TODO
- *
  * @author Ikaros
  * @date 2020/3/29 13:22
  */
 @RestController
 @RequestMapping("/user")
+@Slf4j
 public class UserControllerImpl implements UserController {
   @Autowired private UserService userService;
   @Autowired private PasswordEncoder passwordEncoder;
@@ -32,7 +33,8 @@ public class UserControllerImpl implements UserController {
   @PostMapping
   @PreAuthorize("hasAuthority('eclub_admin_user_add')")
   public ResponseResult insertUser(@Validated User user) {
-    // user.setOperator(auth.getId());
+    log.info("insert user is:{}", user);
+    user.setOperator(SecurityUtils.getUserId());
     user.setId(null);
     user.setCreateTime(new Date());
     user.setUpdateTime(user.getCreateTime());
@@ -43,6 +45,7 @@ public class UserControllerImpl implements UserController {
 
   @Override
   @DeleteMapping("/{id}")
+  @PreAuthorize("hasAuthority('eclub_admin_user_delete')")
   public ResponseResult deleteUser(@PathVariable String id) {
     // 检查是否可以为空
     return userService.deleteUser(id);
@@ -51,6 +54,7 @@ public class UserControllerImpl implements UserController {
   @Override
   @PutMapping("/{id}")
   public ResponseResult updateUser(@PathVariable String id, @Validated User user) {
+    user.setOperator(SecurityUtils.getUserId());
     String password = user.getPassword();
     if (StringUtils.isNotBlank(password)) {
       user.setPassword(passwordEncoder.encode(password));
@@ -61,6 +65,7 @@ public class UserControllerImpl implements UserController {
 
   @Override
   @DeleteMapping
+  @PreAuthorize("hasAuthority('eclub_admin_user_delete')")
   public ResponseResult deleteUserByIds(List<String> ids) {
     return userService.deleteUserByIds(ids);
   }

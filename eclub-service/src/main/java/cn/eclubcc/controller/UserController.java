@@ -2,6 +2,7 @@ package cn.eclubcc.controller;
 
 import cn.eclubcc.pojo.User;
 import cn.eclubcc.pojo.http.request.UserQueryParam;
+import cn.eclubcc.pojo.http.response.QueryResponseResult;
 import cn.eclubcc.pojo.http.response.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -24,5 +25,5 @@ public interface UserController {
   ResponseResult deleteUserByIds(List<String> ids);
 
   @ApiOperation(value = "分页查询用户")
-  ResponseResult listUsersByPage(Integer page, Integer size, UserQueryParam userQueryParam);
+  QueryResponseResult listUsersByPage(Integer page, Integer size, UserQueryParam userQueryParam);
 }

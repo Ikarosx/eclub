@@ -4,6 +4,7 @@ import cn.eclubcc.common.exception.response.CommonCodeEnum;
 import cn.eclubcc.controller.UserController;
 import cn.eclubcc.pojo.User;
 import cn.eclubcc.pojo.http.request.UserQueryParam;
+import cn.eclubcc.pojo.http.response.QueryResponseResult;
 import cn.eclubcc.pojo.http.response.ResponseResult;
 import cn.eclubcc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,7 @@ public class UserControllerImpl implements UserController {
 
   @Override
   @GetMapping("/list/{page}/{size}")
-  public ResponseResult listUsersByPage(
+  public QueryResponseResult listUsersByPage(
       @PathVariable Integer page,
       @PathVariable Integer size,
       @RequestParam UserQueryParam userQueryParam) {

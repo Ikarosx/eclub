@@ -1,0 +1,38 @@
+
+h2. 定义 {anchor:definitions}
+
+h3. OpenIdResponse {anchor:openidresponse}
+
+||名称||说明||类型||
+|*code*\\ \\ _可选_||*样例* : {noformat}0{noformat}||integer (int32)|
+|*message*\\ \\ _可选_||*样例* : {noformat}"string"{noformat}||string|
+|*openId*\\ \\ _可选_||*样例* : {noformat}"string"{noformat}||string|
+|*success*\\ \\ _可选_||*样例* : {noformat}true{noformat}||boolean|
+
+
+h3. QueryResponseResult {anchor:queryresponseresult}
+
+||名称||说明||类型||
+|*code*\\ \\ _可选_||*样例* : {noformat}0{noformat}||integer (int32)|
+|*message*\\ \\ _可选_||*样例* : {noformat}"string"{noformat}||string|
+|*queryResult*\\ \\ _可选_||*样例* : {noformat}"[#queryresult]"{noformat}||[QueryResult|#queryresult]|
+|*success*\\ \\ _可选_||*样例* : {noformat}true{noformat}||boolean|
+
+
+h3. QueryResult {anchor:queryresult}
+
+||名称||说明||类型||
+|*list*\\ \\ _可选_||*样例* : {noformat}[ "object" ]{noformat}||< object > array|
+|*total*\\ \\ _可选_||*样例* : {noformat}0{noformat}||integer (int64)|
+|*totalPage*\\ \\ _可选_||*样例* : {noformat}0{noformat}||integer (int64)|
+
+
+h3. ResponseResult {anchor:responseresult}
+
+||名称||说明||类型||
+|*code*\\ \\ _可选_||*样例* : {noformat}0{noformat}||integer (int32)|
+|*message*\\ \\ _可选_||*样例* : {noformat}"string"{noformat}||string|
+|*success*\\ \\ _可选_||*样例* : {noformat}true{noformat}||boolean|
+
+
+

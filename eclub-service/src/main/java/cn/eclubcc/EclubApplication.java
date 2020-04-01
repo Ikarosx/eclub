@@ -22,12 +22,5 @@ public class EclubApplication {
     }
   }
   
-  /**
-   * 用于发起请求
-   * @return RestTemplate
-   */
-  @Bean
-  public RestTemplate restTemplate() {
-    return new RestTemplate();
-  }
+
 }

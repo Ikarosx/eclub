@@ -8,7 +8,7 @@ import cn.eclubcc.service.ClubService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +27,7 @@ public class ClubControllerImpl implements ClubController {
   @Autowired private ClubService clubService;
 
   @Override
-  @GetMapping
+  @PostMapping
   @PreAuthorize("hasAuthority('eclub_admin_club_add')")
   public ResponseResult insertClub(Club club) {
     // club.setId(null);

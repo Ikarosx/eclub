@@ -104,7 +104,7 @@ public class SwaggerTest {
     Swagger2MarkupConverter.from(new URL("http://localhost:9000/v2/api-docs"))
         .withConfig(config)
         .build()
-        .toFile(Paths.get("./docs/asciidoc/generated/all"));
+        .toFile(Paths.get("./docs/asciidoc/generated/eclub_api"));
   }
 
   /**

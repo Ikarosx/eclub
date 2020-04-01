@@ -1,6 +1,6 @@
 package cn.eclubcc.controller;
 
-import cn.eclubcc.pojo.auth.request.UserInfo;
+import cn.eclubcc.pojo.auth.response.OpenIdResponse;
 import cn.eclubcc.pojo.http.response.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,12 +14,11 @@ public interface AuthController {
   @ApiOperation(
       value = "通过code得到openId",
       notes =
-          "小程序授权之后应该携带code和加密数据请求此接口，"
+          "小程序授权之后应该携带code请求此接口，"
               + "在此接口中携带AppId、AppSecret和code访问微信服务器，"
               + "微信服务器返回session_key和openId，"
-              + "根据session_key解密用户数据，放入session，存入/更新数据库"
               + "接口返回openId和cookie给小程序")
-  ResponseResult getOpenIdByCode(String code);
+  OpenIdResponse getOpenIdByCode(String code);
 
   @ApiOperation(
       value = "设置用户信息",

@@ -1,6 +1,6 @@
 package cn.eclubcc.service;
 
-import cn.eclubcc.pojo.auth.request.UserInfo;
+import cn.eclubcc.pojo.auth.response.OpenIdResponse;
 import cn.eclubcc.pojo.http.response.ResponseResult;
 
 /**
@@ -8,7 +8,7 @@ import cn.eclubcc.pojo.http.response.ResponseResult;
  * @date 2020/3/31 13:27
  */
 public interface AuthService {
-  ResponseResult getOpenIdByCode(String code);
+  OpenIdResponse getOpenIdByCode(String code);
 
   ResponseResult setUserInfo(String userInfoStr, String signature);
 }

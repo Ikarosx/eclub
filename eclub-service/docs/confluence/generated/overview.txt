@@ -1,0 +1,24 @@
+h1. EClub api文档
+
+
+h2. 概览 {anchor:overview}
+EClub 描述
+
+
+h3. 版本信息
+_版本_ : 1.0
+
+
+h3. URI scheme
+_域名_ : localhost:9000\\ 
+_基础路径_ : /
+
+
+h3. 标签
+
+* 用户接口 : User Controller Impl
+* 社团接口 : Club Controller Impl
+* 认证接口 : Auth Controller Impl
+
+
+

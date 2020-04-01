@@ -1,0 +1,460 @@
+
+h2. 资源 {anchor:paths}
+
+h3. 用户接口 {anchor:5b0ad68a45d0727406020ff99714ad3d}
+User Controller Impl
+
+
+h4. 添加用户 {anchor:insertuserusingget}
+{noformat}
+GET /user
+{noformat}
+
+
+h5. 参数
+
+||类型||名称||类型||
+|*Query*|*classGrade*\\ \\ _可选_||string|
+|*Query*|*createTime*\\ \\ _可选_||string (date-time)|
+|*Query*|*email*\\ \\ _可选_||string|
+|*Query*|*id*\\ \\ _可选_||string|
+|*Query*|*nickname*\\ \\ _可选_||string|
+|*Query*|*openId*\\ \\ _可选_||string|
+|*Query*|*operator*\\ \\ _可选_||string|
+|*Query*|*password*\\ \\ _可选_||string|
+|*Query*|*phone*\\ \\ _可选_||string|
+|*Query*|*qq*\\ \\ _可选_||string|
+|*Query*|*sessionKey*\\ \\ _可选_||string|
+|*Query*|*state*\\ \\ _可选_||integer (int32)|
+|*Query*|*studentId*\\ \\ _可选_||string|
+|*Query*|*updateTime*\\ \\ _可选_||string (date-time)|
+|*Query*|*userProfile*\\ \\ _可选_||string|
+|*Query*|*username*\\ \\ _可选_||string|
+|*Query*|*wx*\\ \\ _可选_||string|
+
+
+h5. 响应
+
+||HTTP代码||说明||类型||
+|*200*||OK||[ResponseResult|#responseresult]|
+|*401*||Unauthorized||无内容|
+|*403*||Forbidden||无内容|
+|*404*||Not Found||无内容|
+
+
+h5. 生成
+
+* {noformat}*/*{noformat}
+
+
+h5. HTTP请求示例
+
+h6. 请求 path
+{code}
+/user
+{code}
+
+
+h6. 请求 query
+{code:language=json}
+{
+  "classGrade" : "string",
+  "createTime" : "string",
+  "email" : "string",
+  "id" : "string",
+  "nickname" : "string",
+  "openId" : "string",
+  "operator" : "string",
+  "password" : "string",
+  "phone" : "string",
+  "qq" : "string",
+  "sessionKey" : "string",
+  "state" : 0,
+  "studentId" : "string",
+  "updateTime" : "string",
+  "userProfile" : "string",
+  "username" : "string",
+  "wx" : "string"
+}
+{code}
+
+
+h5. HTTP响应示例
+
+h6. 响应 200
+{code:language=json}
+{
+  "code" : 0,
+  "message" : "string",
+  "success" : true
+}
+{code}
+
+
+h4. 通过ID列表删除用户列表 {anchor:deleteuserbyidsusingdelete}
+{noformat}
+DELETE /user
+{noformat}
+
+
+h5. 参数
+
+||类型||名称||说明||类型||
+|*Body*|*ids*\\ \\ _必填_||ids||< string > array|
+
+
+h5. 响应
+
+||HTTP代码||说明||类型||
+|*200*||OK||[ResponseResult|#responseresult]|
+|*204*||No Content||无内容|
+|*401*||Unauthorized||无内容|
+|*403*||Forbidden||无内容|
+
+
+h5. 生成
+
+* {noformat}*/*{noformat}
+
+
+h5. HTTP请求示例
+
+h6. 请求 path
+{code}
+/user
+{code}
+
+
+h6. 请求 body
+{code:language=json}
+[ "string" ]
+{code}
+
+
+h5. HTTP响应示例
+
+h6. 响应 200
+{code:language=json}
+{
+  "code" : 0,
+  "message" : "string",
+  "success" : true
+}
+{code}
+
+
+h4. 分页查询用户 {anchor:listusersbypageusingget}
+{noformat}
+GET /user/list/{page}/{size}
+{noformat}
+
+
+h5. 参数
+
+||类型||名称||说明||类型||
+|*Path*|*page*\\ \\ _必填_||page||integer (int32)|
+|*Path*|*size*\\ \\ _必填_||size||integer (int32)|
+|*Query*|*userQueryParam*\\ \\ _必填_||userQueryParam||string|
+
+
+h5. 响应
+
+||HTTP代码||说明||类型||
+|*200*||OK||[QueryResponseResult|#queryresponseresult]|
+|*401*||Unauthorized||无内容|
+|*403*||Forbidden||无内容|
+|*404*||Not Found||无内容|
+
+
+h5. 生成
+
+* {noformat}*/*{noformat}
+
+
+h5. HTTP请求示例
+
+h6. 请求 path
+{code}
+/user/list/0/0
+{code}
+
+
+h6. 请求 query
+{code:language=json}
+{
+  "userQueryParam" : "string"
+}
+{code}
+
+
+h5. HTTP响应示例
+
+h6. 响应 200
+{code:language=json}
+{
+  "code" : 0,
+  "message" : "string",
+  "queryResult" : {
+    "list" : [ "object" ],
+    "total" : 0,
+    "totalPage" : 0
+  },
+  "success" : true
+}
+{code}
+
+
+h4. 通过ID删除用户 {anchor:deleteuserusingdelete}
+{noformat}
+DELETE /user/{id}
+{noformat}
+
+
+h5. 参数
+
+||类型||名称||说明||类型||
+|*Path*|*id*\\ \\ _必填_||id||string|
+
+
+h5. 响应
+
+||HTTP代码||说明||类型||
+|*200*||OK||[ResponseResult|#responseresult]|
+|*204*||No Content||无内容|
+|*401*||Unauthorized||无内容|
+|*403*||Forbidden||无内容|
+
+
+h5. 生成
+
+* {noformat}*/*{noformat}
+
+
+h5. HTTP请求示例
+
+h6. 请求 path
+{code}
+/user/string
+{code}
+
+
+h5. HTTP响应示例
+
+h6. 响应 200
+{code:language=json}
+{
+  "code" : 0,
+  "message" : "string",
+  "success" : true
+}
+{code}
+
+
+h3. 社团接口 {anchor:3f094d4af2d9dd81414434b97c9494a1}
+Club Controller Impl
+
+
+h4. 添加社团 {anchor:insertclubusingget}
+{noformat}
+GET /club
+{noformat}
+
+
+h5. 参数
+
+||类型||名称||类型||
+|*Query*|*createTime*\\ \\ _可选_||string (date-time)|
+|*Query*|*description*\\ \\ _可选_||string|
+|*Query*|*id*\\ \\ _可选_||string|
+|*Query*|*logoUri*\\ \\ _可选_||string|
+|*Query*|*name*\\ \\ _可选_||string|
+|*Query*|*operator*\\ \\ _可选_||string|
+|*Query*|*regulationUri*\\ \\ _可选_||string|
+|*Query*|*state*\\ \\ _可选_||integer (int32)|
+|*Query*|*updateTime*\\ \\ _可选_||string (date-time)|
+
+
+h5. 响应
+
+||HTTP代码||说明||类型||
+|*200*||OK||[ResponseResult|#responseresult]|
+|*401*||Unauthorized||无内容|
+|*403*||Forbidden||无内容|
+|*404*||Not Found||无内容|
+
+
+h5. 生成
+
+* {noformat}*/*{noformat}
+
+
+h5. HTTP请求示例
+
+h6. 请求 path
+{code}
+/club
+{code}
+
+
+h6. 请求 query
+{code:language=json}
+{
+  "createTime" : "string",
+  "description" : "string",
+  "id" : "string",
+  "logoUri" : "string",
+  "name" : "string",
+  "operator" : "string",
+  "regulationUri" : "string",
+  "state" : 0,
+  "updateTime" : "string"
+}
+{code}
+
+
+h5. HTTP响应示例
+
+h6. 响应 200
+{code:language=json}
+{
+  "code" : 0,
+  "message" : "string",
+  "success" : true
+}
+{code}
+
+
+h3. 认证接口 {anchor:7d44630033dbde4b227a10b41817c27f}
+Auth Controller Impl
+
+
+h4. 通过code得到openId {anchor:getopenidbycodeusingpost}
+{noformat}
+POST /auth/openid
+{noformat}
+
+
+h5. 说明
+小程序授权之后应该携带code请求此接口，在此接口中携带AppId、AppSecret和code访问微信服务器，微信服务器返回session_key和openId，接口返回openId和cookie给小程序
+
+
+h5. 参数
+
+||类型||名称||说明||类型||
+|*Body*|*code*\\ \\ _必填_||code||string|
+
+
+h5. 响应
+
+||HTTP代码||说明||类型||
+|*200*||OK||[OpenIdResponse|#openidresponse]|
+|*201*||Created||无内容|
+|*401*||Unauthorized||无内容|
+|*403*||Forbidden||无内容|
+|*404*||Not Found||无内容|
+
+
+h5. 消耗
+
+* {noformat}application/json{noformat}
+
+
+h5. 生成
+
+* {noformat}*/*{noformat}
+
+
+h5. HTTP请求示例
+
+h6. 请求 path
+{code}
+/auth/openid
+{code}
+
+
+h6. 请求 body
+{code:language=json}
+{ }
+{code}
+
+
+h5. HTTP响应示例
+
+h6. 响应 200
+{code:language=json}
+{
+  "code" : 0,
+  "message" : "string",
+  "openId" : "string",
+  "success" : true
+}
+{code}
+
+
+h4. 设置用户信息 {anchor:setuserinfousingput}
+{noformat}
+PUT /auth/userinfo
+{noformat}
+
+
+h5. 说明
+用户通过getOpenIdByCode后得到了openid，然后在前端通过getUserInfo接口拿到用户数据，再带着数据和签名请求此接口进行用户信息的录入
+
+
+h5. 参数
+
+||类型||名称||说明||类型||
+|*Query*|*signature*\\ \\ _可选_||signature||string|
+|*Query*|*userInfoStr*\\ \\ _可选_||userInfoStr||string|
+
+
+h5. 响应
+
+||HTTP代码||说明||类型||
+|*200*||OK||[ResponseResult|#responseresult]|
+|*201*||Created||无内容|
+|*401*||Unauthorized||无内容|
+|*403*||Forbidden||无内容|
+|*404*||Not Found||无内容|
+
+
+h5. 消耗
+
+* {noformat}application/json{noformat}
+
+
+h5. 生成
+
+* {noformat}*/*{noformat}
+
+
+h5. HTTP请求示例
+
+h6. 请求 path
+{code}
+/auth/userinfo
+{code}
+
+
+h6. 请求 query
+{code:language=json}
+{
+  "signature" : "string",
+  "userInfoStr" : "string"
+}
+{code}
+
+
+h5. HTTP响应示例
+
+h6. 响应 200
+{code:language=json}
+{
+  "code" : 0,
+  "message" : "string",
+  "success" : true
+}
+{code}
+
+
+

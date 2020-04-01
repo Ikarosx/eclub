@@ -9,5 +9,5 @@ import io.swagger.annotations.ApiOperation;
 public interface HomeController {
 
     @ApiOperation(value = "首页数据")
-    ResponseResult home();
+    ResponseResult home(Integer page);
 }

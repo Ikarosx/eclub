@@ -1,6 +1,5 @@
 package cn.eclubcc.config.redis;
 
-
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +20,9 @@ import java.lang.reflect.Method;
 
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {
+
+
+
 
     /**
      * 自定义缓存key的生成策略，默认的生成策略是乱的

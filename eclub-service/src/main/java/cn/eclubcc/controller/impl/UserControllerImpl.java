@@ -69,6 +69,8 @@ public class UserControllerImpl implements UserController {
   @GetMapping("/list/{page}/{size}")
   public QueryResponseResult listUsersByPage(
       @PathVariable Integer page, @PathVariable Integer size, UserQueryParam userQueryParam) {
+
+
     return userService.listUsersByPage(page, size, userQueryParam);
   }
 }

@@ -33,6 +33,7 @@
         <!-- guava -->
         <guava.version>24.0-jre</guava.version>
         <redis.version>2.2.3.RELEASE</redis.version>
+        <spring-session.version>2.2.2.RELEASE</spring-session.version>
     </properties>
     <dependencies>
         <!-- SpringBootDependencies版本控制 -->
@@ -65,6 +66,11 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
+            <version>${spring-session.version}</version>
         </dependency>
         <!-- SpringBootTest -->
         <dependency>
@@ -104,7 +110,7 @@
             <artifactId>commons-codec</artifactId>
             <version>${commons-codec.version}</version>
         </dependency>
-
+        
         <!-- swagger -->
         <dependency>
             <groupId>io.springfox</groupId>

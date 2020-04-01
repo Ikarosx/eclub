@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 /**
  * @author Ikaros
@@ -22,6 +23,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Configuration
 @EnableWebSecurity
+@EnableRedisHttpSession
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Qualifier(value = "UserDetailsServiceImpl")
@@ -67,7 +69,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/swagger-resources",
             "/swagger-resources/configuration/security",
             "/swagger-ui.html",
-            "/**",
             "/webjars/**")
         .permitAll()
         .anyRequest()

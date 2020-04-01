@@ -3,9 +3,6 @@ package cn.eclubcc;
 import lombok.extern.java.Log;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 /**
  * @author Ikaros
@@ -22,6 +19,4 @@ public class EclubApplication {
       log.info("容器启动错误=>" + e.getMessage());
     }
   }
-  
-
 }

@@ -116,6 +116,9 @@ public class AuthServiceImpl implements AuthService {
     HttpServletRequest request =
         ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
     User user = (User) request.getSession().getAttribute("user");
+    if (user == null) {
+      ExceptionCast.cast(AuthCodeEnum.GET_SESSION_USER_ERROR);
+    }
     String sessionKey = user.getSessionKey();
     if (StringUtils.isBlank(sessionKey)) {
       ExceptionCast.cast(AuthCodeEnum.SERVER_SESSION_KEY_BLANK);

@@ -14,6 +14,7 @@ public enum AuthCodeEnum implements ResultCode {
   CODE_IS_BLANK(false, 20006, "收到的code为空"),
   SIGNATURE_VALID_ERROR(false, 20007, "签名验证失败"),
   SERVER_SESSION_KEY_BLANK(false, 20008, "服务器sessionKey为空"),
+  GET_SESSION_USER_ERROR(false, 20009, "获取session用户错误"),
   SESSION_KEY_INVALID(false, 99998, "session_key过期");
 
   AuthCodeEnum(boolean success, int code, String message) {

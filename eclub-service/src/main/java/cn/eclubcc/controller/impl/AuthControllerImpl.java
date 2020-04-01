@@ -5,7 +5,10 @@ import cn.eclubcc.pojo.auth.response.OpenIdResponse;
 import cn.eclubcc.pojo.http.response.ResponseResult;
 import cn.eclubcc.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author Ikaros
@@ -26,7 +29,7 @@ public class AuthControllerImpl implements AuthController {
    */
   @Override
   @PostMapping("/openid")
-  public OpenIdResponse getOpenIdByCode(@RequestParam String code) {
+  public OpenIdResponse getOpenIdByCode(String code) {
     return authService.getOpenIdByCode(code);
   }
 

@@ -6,6 +6,7 @@ import cn.eclubcc.pojo.Club;
 import cn.eclubcc.pojo.http.response.ResponseResult;
 import cn.eclubcc.service.ClubService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +18,9 @@ import java.util.List;
 @Service
 public class ClubServiceImpl implements ClubService {
   @Autowired private ClubRepository clubRepository;
+
+  @Autowired
+  private RedisTemplate<String, Object> redisTemplate;
 
   @Override
   public ResponseResult insertClub(Club club) {
@@ -32,5 +36,9 @@ public class ClubServiceImpl implements ClubService {
   @Override
   public ResponseResult updateClub(Long id, Club club) {
     return null;
+  }
+
+  public void getS(){
+    System.out.println(redisTemplate);
   }
 }

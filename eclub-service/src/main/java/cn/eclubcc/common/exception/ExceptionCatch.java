@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -36,6 +37,9 @@ public class ExceptionCatch {
         DataIntegrityViolationException.class, CommonCodeEnum.DATA_INTEGRITY_VIOLATION_EXCEPTION);
     builder.put(MethodArgumentNotValidException.class, CommonCodeEnum.INVALID_PARAM);
     builder.put(AccessDeniedException.class, AuthCodeEnum.ACCESS_DENIED_EXCEPTION);
+    builder.put(
+        HttpRequestMethodNotSupportedException.class,
+        CommonCodeEnum.HTTP_REQUEST_METHOD_NOT_SUPPORT_EDEXCEPTION);
   }
 
   /**

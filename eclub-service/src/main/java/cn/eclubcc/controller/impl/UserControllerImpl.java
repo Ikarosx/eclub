@@ -44,7 +44,7 @@ public class UserControllerImpl implements UserController {
 
   @Override
   @DeleteMapping
-  public ResponseResult deleteUserByIds(@RequestBody List<String> ids) {
+  public ResponseResult deleteUserByIds(List<String> ids) {
     return userService.deleteUserByIds(ids);
   }
 

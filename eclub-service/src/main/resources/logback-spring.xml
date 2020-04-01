@@ -80,7 +80,7 @@
         <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
             <dataSource class="com.alibaba.druid.pool.DruidDataSource">
                 <driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
-                <url>jdbc:mysql://mysql.eclubcc.cn:3306/eclub</url>
+                <url>jdbc:mysql://47.112.190.215:3306/eclub</url>
                 <username>eclub</username>
                 <password>eclub2020</password>
             </dataSource>

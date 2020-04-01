@@ -7,6 +7,7 @@ import cn.eclubcc.pojo.http.request.UserQueryParam;
 import cn.eclubcc.pojo.http.response.ResponseResult;
 import cn.eclubcc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,4 +56,5 @@ public class UserControllerImpl implements UserController {
       @RequestParam UserQueryParam userQueryParam) {
     return userService.listUsersByPage(page, size, userQueryParam);
   }
+
 }

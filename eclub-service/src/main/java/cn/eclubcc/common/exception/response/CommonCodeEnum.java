@@ -10,6 +10,7 @@ public enum CommonCodeEnum implements ResultCode {
   INVALID_PARAM(false, 10001, "非法参数"),
   DATA_INTEGRITY_VIOLATION_EXCEPTION(false, 10002, "数据完整性约束异常"),
   HTTP_REQUEST_METHOD_NOT_SUPPORT_EDEXCEPTION(false, 10003, "HTTP请求方法不支持"),
+  NOT_LOGIN(false, 99998, "用户未登录"),
   SERVER_ERROR(false, 99999, "服务器内部错误");
 
   CommonCodeEnum(boolean success, int code, String message) {

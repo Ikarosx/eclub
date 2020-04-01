@@ -7,6 +7,7 @@ import cn.eclubcc.dao.PermissionRepository;
 import cn.eclubcc.dao.UserRepository;
 import cn.eclubcc.pojo.User;
 import cn.eclubcc.pojo.UserExtension;
+import cn.eclubcc.pojo.auth.Permission;
 import cn.eclubcc.pojo.auth.response.UserResponse;
 import cn.eclubcc.pojo.http.request.UserQueryParam;
 import cn.eclubcc.pojo.http.response.QueryResponseResult;
@@ -109,7 +110,8 @@ public class UserServiceImpl implements UserService {
     User user = userRepository.findByUsername(username);
     UserExtension userExtension = new UserExtension();
     BeanUtils.copyProperties(user, userExtension);
-    userExtension.setPermissions(permissionRepository.listPermissions(user.getId()));
+    List<Permission> permissions = permissionRepository.listPermissions(user.getId());
+    userExtension.setPermissions(permissions);
     return userExtension;
   }
 

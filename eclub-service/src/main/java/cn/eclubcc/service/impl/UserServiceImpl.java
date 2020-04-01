@@ -1,10 +1,13 @@
 package cn.eclubcc.service.impl;
 
+import cn.eclubcc.common.exception.ExceptionCast;
 import cn.eclubcc.common.exception.response.CommonCodeEnum;
+import cn.eclubcc.common.exception.response.UserCodeEnum;
 import cn.eclubcc.dao.PermissionRepository;
 import cn.eclubcc.dao.UserRepository;
 import cn.eclubcc.pojo.User;
 import cn.eclubcc.pojo.UserExtension;
+import cn.eclubcc.pojo.auth.response.UserResponse;
 import cn.eclubcc.pojo.http.request.UserQueryParam;
 import cn.eclubcc.pojo.http.response.QueryResponseResult;
 import cn.eclubcc.pojo.http.response.QueryResult;
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -38,14 +42,23 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public ResponseResult updateUser(User user) {
-    // TODO
-    return null;
+    Optional<User> optional = userRepository.findById(user.getId());
+    User newUser = optional.orElseGet(null);
+    if (newUser == null) {
+      ExceptionCast.cast(UserCodeEnum.USER_NOT_EXIST);
+    }
+    BeanUtils.copyProperties(user, newUser);
+    userRepository.save(newUser);
+    return new ResponseResult(CommonCodeEnum.SUCCESS);
   }
 
   @Override
-  public ResponseResult getUserByOpenId(String openId) {
-    // TODO
-    return null;
+  public UserResponse getUserByOpenId(String openId) {
+    User user = userRepository.findByOpenId(openId);
+    if (user == null) {
+      ExceptionCast.cast(UserCodeEnum.USER_NOT_EXIST);
+    }
+    return new UserResponse(CommonCodeEnum.SUCCESS, user);
   }
 
   @Override

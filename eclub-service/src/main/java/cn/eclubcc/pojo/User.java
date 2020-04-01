@@ -51,7 +51,7 @@ public class User {
   @NotNull
   private int state;
 
-  @NotNull private Date createTime;
-  @NotNull private Date updateTime;
-  @NotEmpty private String operator;
+  private Date createTime;
+  private Date updateTime;
+  private String operator;
 }

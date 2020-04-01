@@ -4,16 +4,24 @@ import cn.eclubcc.common.exception.response.AuthCodeEnum;
 import cn.eclubcc.common.exception.response.CommonCodeEnum;
 import cn.eclubcc.common.exception.response.ResultCode;
 import cn.eclubcc.pojo.http.response.ResponseResult;
+import cn.eclubcc.pojo.http.response.ValidationErrorResponse;
+import cn.eclubcc.pojo.http.response.ValidationMessage;
 import com.google.common.collect.ImmutableMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Ikaros
@@ -56,6 +64,26 @@ public class ExceptionCatch {
 
     ResponseResult responseResult = new ResponseResult(resultCode);
     log.info(responseResult.toString());
+    return responseResult;
+  }
+
+  @ExceptionHandler(BindException.class)
+  @ResponseBody
+  public ValidationErrorResponse bindException(BindException e) {
+    log.error("catch exception : {}", e.getMessage());
+    List<ObjectError> allErrors = e.getAllErrors();
+    List<ValidationMessage> validationMessages = new ArrayList<>();
+    for (ObjectError objectError : allErrors) {
+      if (objectError instanceof FieldError) {
+        FieldError fieldError = (FieldError) objectError;
+        validationMessages.add(
+            new ValidationMessage(fieldError.getField(), fieldError.getDefaultMessage()));
+      } else {
+        validationMessages.add(new ValidationMessage(null, objectError.getDefaultMessage()));
+      }
+    }
+    ValidationErrorResponse responseResult =
+        new ValidationErrorResponse(CommonCodeEnum.INVALID_PARAM, validationMessages);
     return responseResult;
   }
 

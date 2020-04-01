@@ -48,6 +48,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             AuthorityUtils.commaSeparatedStringToAuthorityList(userPermissionString));
     authUser.setNickName(userExtension.getNickname());
     authUser.setStudentId(userExtension.getStudentId());
+    authUser.setId(userExtension.getId());
     return authUser;
   }
 }

@@ -1,5 +1,5 @@
 server:
-    port: 9000
+    port: 8005
     servlet:
         session:
             timeout: 7200
@@ -42,3 +42,6 @@ eclub:
     auth:
         appId: wx13ba688635e7624e
         appSecret: cb8fc6b10933ad71eb4641d422764522
+mybatis:
+    configuration:
+        map-underscore-to-camel-case: true

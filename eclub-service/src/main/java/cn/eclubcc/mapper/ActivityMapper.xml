@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.eclubcc.mapper.ActivityMapper">
+    <select id="selectActivityDetailById" resultType="cn.eclubcc.pojo.activity.Activity">
+        SELECT * FROM activity WHERE state=#{state}
+        <if test="activity.id !=null and activity.id!=''">
+            AND id=#{activity.id}
+        </if>
+        <if test="activity.clubId !=null and activity.clubId!=''">
+            AND club_id=#{activity.clubId}
+        </if>
+        <if test="activity.userId !=null and activity.userId!=''">
+            AND user_id=#{activity.userId}
+        </if>
+        ORDER BY update_time
+    </select>
+</mapper>

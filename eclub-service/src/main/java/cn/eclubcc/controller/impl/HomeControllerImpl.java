@@ -39,4 +39,14 @@ public class HomeControllerImpl implements HomeController {
         queryResult.setTotal(list.size());
         return new QueryResponseResult(CommonCodeEnum.SUCCESS, queryResult);
     }
+
+    @GetMapping("test")
+    public ResponseResult test() {
+        List list = homeService.queryClubListLimit(1, 10);
+
+        QueryResult<Object> queryResult = new QueryResult<>();
+        queryResult.setList(list);
+        queryResult.setTotal(list.size());
+        return new QueryResponseResult(CommonCodeEnum.SUCCESS, queryResult);
+    }
 }

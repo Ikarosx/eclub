@@ -23,7 +23,7 @@ public class HomeCacheUtil extends RedisUtil{
 
 
     @Autowired
-    private static HomeServiceImpl homeService;
+    private static HomeServiceImpl homeService = new HomeServiceImpl();
 
     /**
      * 将缓存存入Redis
@@ -51,12 +51,18 @@ public class HomeCacheUtil extends RedisUtil{
 
         String clubList_page = "clubList-page" + page;
 
-        // 从缓存中读取数据
-        List result = RedisUtil.lGet(clubList_page, 0, -1);
+        List result = null;
 
-        if(result != null) {
-            return result;
+        if(RedisUtil.hasKey(clubList_page)) {
+
+            result = RedisUtil.lGet(clubList_page, 0, -1);
         }
+
+//        // 从缓存中读取数据
+//        if(result != null) {
+//
+//            return result;
+//        }
 
         ReentrantLock lock = new ReentrantLock();
         // 成功获取锁，则从数据库获取数据
@@ -64,7 +70,7 @@ public class HomeCacheUtil extends RedisUtil{
             System.out.println("=====> lock.tryLock() yes");
             // 从数据库获取数据
             result = homeService.queryClubListLimit(page, CLUBLIST_LIMIT);
-
+            System.out.println(result.size());
             // 更新缓存
             if(result != null) {
                 setCacheByList(clubList_page, result, 10);

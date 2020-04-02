@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -16,7 +17,8 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "user")
-public class User {
+public class User implements Serializable {
+  private static final long serialVersionUID = -6532182578272956566L;
 
   @Id
   @GeneratedValue(generator = "snowFlakeGenerator")

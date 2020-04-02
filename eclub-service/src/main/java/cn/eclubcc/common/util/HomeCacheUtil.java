@@ -2,7 +2,10 @@ package cn.eclubcc.common.util;
 
 import cn.eclubcc.service.HomeService;
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -16,36 +19,35 @@ public class HomeCacheUtil extends RedisUtil{
     public static final int CLUBLIST_LIMIT = 10;
 
 
-    /**
-     * 将缓存存入Redis
-     * @param key
-     * @param list
-     * @param time  过期时间 单位：分钟
-     * @return
-     * author: markeNick
-     */
-    public static boolean setCacheByList(String key, List list, int time) {
-        System.out.println("=====> setCacheByList");
-        return RedisUtil.lSet(key, list, BASE_EXPIRE * time);
-    }
+
 
     /**
      * 从缓存获取数据，没有数据就去数据库获取
      * @param page
      * @return List<Object>
      * @throws InterruptedException
+     *
      * author: markeNick
      */
-    public static List getCacheOfClubList(int page, int limit, String category, HomeService homeService) throws InterruptedException{
+    public static Map<String, Object> getCacheOfClubList(int page, int limit, String category, HomeService homeService) throws InterruptedException{
 
         String clubList_page = "clubList_" + category + "_page_" + page + "_limit_" + limit;
+        String clubList_count = "clubList_" + category + "_count";
 
-        List result = null;
-        result = RedisUtil.lGet(clubList_page, 0, -1);
+        Map<String, Object> result = new HashMap<>();
+        long count;
+        List list = null;
 
         // 从缓存中读取数据
-        if(result != null && result.size() > 0) {
+        list = RedisUtil.lGet(clubList_page, 0, -1);
 
+        String countStr = (String) RedisUtil.get(clubList_count);
+        count = Long.parseLong(countStr == null ? "0" : countStr) ;
+
+        if(list != null && list.size() > 0) {
+
+            result.put("list", list);
+            result.put("count", count);
             return result;
         }
 
@@ -55,12 +57,16 @@ public class HomeCacheUtil extends RedisUtil{
 
             try {
                 // 从数据库获取数据
-                result = homeService.queryClubListLimit(page, limit, category);
+                list = homeService.queryClubListLimit(page, limit, category);
+                count = homeService.queryClubCountByCategory(category);
+                result.put("list", list);
+                result.put("count", count);
 
                 // 更新缓存
-                if(result != null && result.size() > 0) {
+                if(list != null && list.size() > 0) {
 
-                    setCacheByList(clubList_page, result, 10);
+                    setCacheByList(clubList_page, list, 10);
+                    setCacheByString(clubList_count, count, 10);
                 }
             } finally {
                 lock.unlock();
@@ -72,5 +78,31 @@ public class HomeCacheUtil extends RedisUtil{
         }
 
         return result;
+    }
+
+    /**
+     * 将List缓存存入Redis
+     * @param key
+     * @param list
+     * @param time  过期时间 单位：分钟
+     * @return
+     *
+     * author: markeNick
+     */
+    public static boolean setCacheByList(String key, List list, int time) {
+        return RedisUtil.lSet(key, list, BASE_EXPIRE * time);
+    }
+
+    /**
+     * 将Object缓存存入Redis
+     * @param key
+     * @param object
+     * @param time
+     * @return
+     *
+     * author: markeNick
+     */
+    public static boolean setCacheByString(String key, Object object, int time) {
+        return RedisUtil.set(key, object, BASE_EXPIRE * time);
     }
 }

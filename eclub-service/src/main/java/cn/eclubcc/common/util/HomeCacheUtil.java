@@ -1,6 +1,7 @@
 package cn.eclubcc.common.util;
 
 import cn.eclubcc.pojo.Club;
+import cn.eclubcc.service.HomeService;
 import cn.eclubcc.service.impl.HomeServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +21,6 @@ public class HomeCacheUtil extends RedisUtil{
 
     public static final int CLUBLIST_LIMIT = 10;
 
-
-
-    @Autowired
-    private static HomeServiceImpl homeService = new HomeServiceImpl();
 
     /**
      * 将缓存存入Redis
@@ -45,43 +42,39 @@ public class HomeCacheUtil extends RedisUtil{
      * @throws InterruptedException
      * author: markeNick
      */
-    public static List getCacheOfClubList(int page) throws InterruptedException{
-
-        System.out.println("=====> getCacheOfClubList");
+    public static List getCacheOfClubList(int page, HomeService homeService) throws InterruptedException{
 
         String clubList_page = "clubList-page" + page;
 
         List result = null;
+        result = RedisUtil.lGet(clubList_page, 0, -1);
 
-        if(RedisUtil.hasKey(clubList_page)) {
+        // 从缓存中读取数据
+        if(result != null && result.size() > 0) {
 
-            result = RedisUtil.lGet(clubList_page, 0, -1);
+            return result;
         }
-
-//        // 从缓存中读取数据
-//        if(result != null) {
-//
-//            return result;
-//        }
 
         ReentrantLock lock = new ReentrantLock();
         // 成功获取锁，则从数据库获取数据
         if(lock.tryLock()) {
-            System.out.println("=====> lock.tryLock() yes");
-            // 从数据库获取数据
-            result = homeService.queryClubListLimit(page, CLUBLIST_LIMIT);
-            System.out.println(result.size());
-            // 更新缓存
-            if(result != null) {
-                setCacheByList(clubList_page, result, 10);
-                System.out.println("===========>" + result.get(0));
-            }
 
-            lock.unlock();
+            try {
+                // 从数据库获取数据
+                result = homeService.queryClubListLimit(page, CLUBLIST_LIMIT);
+
+                // 更新缓存
+                if(result != null && result.size() > 0) {
+
+                    setCacheByList(clubList_page, result, 10);
+                }
+            } finally {
+                lock.unlock();
+            }
         } else {    // 获取锁失败
             // 休眠100ms后，重新获取数据
             Thread.sleep(100);
-            result = getCacheOfClubList(page);
+            result = getCacheOfClubList(page, homeService);
         }
 
         return result;

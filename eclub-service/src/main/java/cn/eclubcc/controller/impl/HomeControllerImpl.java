@@ -31,22 +31,23 @@ public class HomeControllerImpl implements HomeController {
     @Override
     @GetMapping("/clubList/{page}")
     public ResponseResult queryClubList(@PathVariable Integer page) throws InterruptedException{
-        System.out.println("=====> queryClubList");
-        List list = HomeCacheUtil.getCacheOfClubList(page);
+        List list = HomeCacheUtil.getCacheOfClubList(page, homeService);
 
         QueryResult<Object> queryResult = new QueryResult<>();
         queryResult.setList(list);
         queryResult.setTotal(list.size());
+        queryResult.setTotalPage(0);
         return new QueryResponseResult(CommonCodeEnum.SUCCESS, queryResult);
     }
 
-    @GetMapping("test")
-    public ResponseResult test() {
-        List list = homeService.queryClubListLimit(1, 10);
+    @GetMapping("test/{page}")
+    public ResponseResult test(@PathVariable Integer page) {
+        List list = homeService.queryClubListLimit(page, 1);
 
         QueryResult<Object> queryResult = new QueryResult<>();
         queryResult.setList(list);
         queryResult.setTotal(list.size());
+        queryResult.setTotalPage(0);
         return new QueryResponseResult(CommonCodeEnum.SUCCESS, queryResult);
     }
 }

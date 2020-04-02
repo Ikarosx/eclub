@@ -19,7 +19,6 @@ public class HomeServiceImpl implements HomeService {
 
     @Override
     public List queryClubListLimit(Integer offset, Integer limit) {
-        System.out.println("=====> queryClubListLimit");
         PageHelper.startPage(offset,limit);
         return homeMapper.queryClubListLimit();
     }

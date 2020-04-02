@@ -49,7 +49,7 @@ public class User {
   @Min(0)
   @Max(1)
   @NotNull
-  private int state;
+  private Integer state;
 
   private Date createTime;
   private Date updateTime;

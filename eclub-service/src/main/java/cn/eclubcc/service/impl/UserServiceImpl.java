@@ -99,9 +99,10 @@ public class UserServiceImpl implements UserService {
     Pageable pageable = PageRequest.of(page, size, sort);
     Page<User> pageUser = userRepository.findAll(example, pageable);
     QueryResult<User> queryResult = new QueryResult<>();
-    queryResult.setList(pageUser.getContent());
-    queryResult.setTotal(queryResult.getTotal());
-    queryResult.setTotalPage(queryResult.getTotalPage());
+    List<User> all = userRepository.findAll();
+    queryResult.setList(all);
+    queryResult.setTotal(all.size());
+    // queryResult.setTotalPage(queryResult.getTotalPage());
     return new QueryResponseResult(CommonCodeEnum.SUCCESS, queryResult);
   }
 

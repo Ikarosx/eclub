@@ -14,11 +14,15 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
         <result column="operator" jdbcType="VARCHAR" property="operator" />
-        <result column="type" jdbcType="VARCHAR" property="operator" />
+        <result column="category" jdbcType="VARCHAR" property="category" />
     </resultMap>
-    <select id="queryClubListLimit" resultMap="ClubResultMap">
+    <select id="queryClubListLimit" resultMap="ClubResultMap" parameterType="string">
         select distinct * from club
         where state = 0
+        <if test="category != null and category != ''.toString() and category != '0'.toString() ">
+        and category = #{category}
+        </if>
+
         order by update_time
     </select>
 </mapper>

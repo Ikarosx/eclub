@@ -18,8 +18,8 @@ public class HomeServiceImpl implements HomeService {
     private HomeMapper homeMapper;
 
     @Override
-    public List queryClubListLimit(Integer offset, Integer limit) {
+    public List queryClubListLimit(Integer offset, Integer limit, String category) {
         PageHelper.startPage(offset,limit);
-        return homeMapper.queryClubListLimit();
+        return homeMapper.queryClubListLimit(category);
     }
 }

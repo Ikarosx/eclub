@@ -30,22 +30,12 @@ public class HomeControllerImpl implements HomeController {
     private HomeService homeService;
 
     @Override
-    @GetMapping("/clubList/{page}/{limit}")
-    public ResponseResult queryClubList(@PathVariable @NotNull Integer page,
-                                        @PathVariable @DefaultValue("10") Integer limit) throws InterruptedException{
+    @GetMapping("/clubList/{page}/{limit}/{category}")
+    public ResponseResult queryClubList(@PathVariable @DefaultValue("0") Integer page,
+                                        @PathVariable @DefaultValue("10") Integer limit,
+                                        @PathVariable @DefaultValue("0") String category) throws InterruptedException{
 
-        List list = HomeCacheUtil.getCacheOfClubList(page, limit, homeService);
-
-        QueryResult<Object> queryResult = new QueryResult<>();
-        queryResult.setList(list);
-        queryResult.setTotal(list.size());
-        queryResult.setTotalPage(0);
-        return new QueryResponseResult(CommonCodeEnum.SUCCESS, queryResult);
-    }
-
-    @GetMapping("test/{page}")
-    public ResponseResult test(@PathVariable Integer page) {
-        List list = homeService.queryClubListLimit(page, 5);
+        List list = HomeCacheUtil.getCacheOfClubList(page, limit, category, homeService);
 
         QueryResult<Object> queryResult = new QueryResult<>();
         queryResult.setList(list);
@@ -53,4 +43,5 @@ public class HomeControllerImpl implements HomeController {
         queryResult.setTotalPage(0);
         return new QueryResponseResult(CommonCodeEnum.SUCCESS, queryResult);
     }
+
 }

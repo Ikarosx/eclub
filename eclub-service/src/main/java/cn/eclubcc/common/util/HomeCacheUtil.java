@@ -36,9 +36,9 @@ public class HomeCacheUtil extends RedisUtil{
      * @throws InterruptedException
      * author: markeNick
      */
-    public static List getCacheOfClubList(int page, int limit, HomeService homeService) throws InterruptedException{
+    public static List getCacheOfClubList(int page, int limit, String category, HomeService homeService) throws InterruptedException{
 
-        String clubList_page = "clubList-page" + page;
+        String clubList_page = "clubList_" + category + "_page_" + page + "_limit_" + limit;
 
         List result = null;
         result = RedisUtil.lGet(clubList_page, 0, -1);
@@ -55,7 +55,7 @@ public class HomeCacheUtil extends RedisUtil{
 
             try {
                 // 从数据库获取数据
-                result = homeService.queryClubListLimit(page, limit);
+                result = homeService.queryClubListLimit(page, limit, category);
 
                 // 更新缓存
                 if(result != null && result.size() > 0) {
@@ -68,7 +68,7 @@ public class HomeCacheUtil extends RedisUtil{
         } else {    // 获取锁失败
             // 休眠100ms后，重新获取数据
             Thread.sleep(100);
-            result = getCacheOfClubList(page, limit, homeService);
+            result = getCacheOfClubList(page, limit, category, homeService);
         }
 
         return result;

@@ -38,5 +38,5 @@ public class Club {
   @NotNull private Date updateTime;
   private String operator;
 
-  private String type;
+  private String category;
 }

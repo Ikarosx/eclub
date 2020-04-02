@@ -14,6 +14,7 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
         <result column="operator" jdbcType="VARCHAR" property="operator" />
+        <result column="type" jdbcType="VARCHAR" property="operator" />
     </resultMap>
     <select id="queryClubListLimit" resultMap="ClubResultMap">
         select distinct * from club

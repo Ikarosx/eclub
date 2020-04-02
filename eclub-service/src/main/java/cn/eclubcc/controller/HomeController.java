@@ -10,5 +10,5 @@ import java.util.List;
 public interface HomeController {
 
     @ApiOperation(value = "社团列表数据")
-    ResponseResult queryClubList(Integer page) throws InterruptedException;
+    ResponseResult queryClubList(Integer page, Integer limit) throws InterruptedException;
 }

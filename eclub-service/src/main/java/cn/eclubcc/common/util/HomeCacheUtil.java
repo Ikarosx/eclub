@@ -1,13 +1,7 @@
 package cn.eclubcc.common.util;
 
-import cn.eclubcc.pojo.Club;
 import cn.eclubcc.service.HomeService;
-import cn.eclubcc.service.impl.HomeServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -42,7 +36,7 @@ public class HomeCacheUtil extends RedisUtil{
      * @throws InterruptedException
      * author: markeNick
      */
-    public static List getCacheOfClubList(int page, HomeService homeService) throws InterruptedException{
+    public static List getCacheOfClubList(int page, int limit, HomeService homeService) throws InterruptedException{
 
         String clubList_page = "clubList-page" + page;
 
@@ -61,7 +55,7 @@ public class HomeCacheUtil extends RedisUtil{
 
             try {
                 // 从数据库获取数据
-                result = homeService.queryClubListLimit(page, CLUBLIST_LIMIT);
+                result = homeService.queryClubListLimit(page, limit);
 
                 // 更新缓存
                 if(result != null && result.size() > 0) {
@@ -74,7 +68,7 @@ public class HomeCacheUtil extends RedisUtil{
         } else {    // 获取锁失败
             // 休眠100ms后，重新获取数据
             Thread.sleep(100);
-            result = getCacheOfClubList(page, homeService);
+            result = getCacheOfClubList(page, limit, homeService);
         }
 
         return result;

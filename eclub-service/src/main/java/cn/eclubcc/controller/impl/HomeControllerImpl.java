@@ -28,11 +28,14 @@ public class HomeControllerImpl implements HomeController {
     private HomeService homeService;
 
     @Override
-    @RequestMapping(value = {"/clubList/{page}/{limit}", "/clubList/{page}/{limit}/{category}"}, method = RequestMethod.GET)
-    public ResponseResult queryClubList(@PathVariable @Value("0") Integer page,
+    @RequestMapping(value = {"/clubList/{current}/{limit}", "/clubList/{current}/{limit}/{category}"}, method = RequestMethod.GET)
+    public ResponseResult queryClubList(@PathVariable @Value("0") Integer current,
                                         @PathVariable @Value("10") Integer limit,
                                         @PathVariable @Value("0") String category) throws InterruptedException{
 
+        double temp = current / limit;
+//        int page = (int)(temp % 10 > 0 ? (int) temp + 1 : temp);
+        int page = (int) Math.ceil(temp);
         Map<String, Object> map = HomeCacheUtil.getCacheOfClubList(page, limit, category, homeService);
         List list = (List) map.get("list");
 

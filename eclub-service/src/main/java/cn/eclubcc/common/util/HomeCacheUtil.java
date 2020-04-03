@@ -18,8 +18,11 @@ public class HomeCacheUtil extends RedisUtil{
 
     /**
      * 从缓存获取数据，没有数据就去数据库获取
-     * @param page
-     * @return List<Object>
+     * @param page  当前页
+     * @param limit 限制数
+     * @param category  社团类别
+     * @param homeService
+     * @return
      * @throws InterruptedException
      *
      * author: markeNick

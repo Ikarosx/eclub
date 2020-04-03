@@ -14,11 +14,9 @@ import java.util.concurrent.locks.ReentrantLock;
 @Slf4j
 public class HomeCacheUtil extends RedisUtil{
     // 首页缓存基础时间 -- 1分钟
-    public static final long BASE_EXPIRE = 60000;
+    public static final long BASE_EXPIRE = 6000;
 
     public static final int CLUBLIST_LIMIT = 10;
-
-
 
 
     /**
@@ -67,6 +65,9 @@ public class HomeCacheUtil extends RedisUtil{
 
                     setCacheByList(clubList_page, list, 10);
                     setCacheByString(clubList_count, count, 10);
+                } else {    // 防止缓存击穿
+                    setCacheByList(clubList_page, null, 1);
+                    setCacheByString(clubList_count, "null", 1);
                 }
             } finally {
                 lock.unlock();

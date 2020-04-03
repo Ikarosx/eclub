@@ -30,8 +30,7 @@ public class ActivityControllerImpl implements ActivityController {
     ActivityService activityService;
 
     /**
-     *
-     * @param activity(id(活动表id) 或 clubId 或 userId)
+     * @param activity
      * @param page
      * @param limit
      * @param state
@@ -40,15 +39,13 @@ public class ActivityControllerImpl implements ActivityController {
     @GetMapping("/detail")
     @Override
     public ResponseResult getActivityDetail(ActivityForDetail activity,
-                                            @RequestParam(defaultValue = "1")Integer page,
+                                            @RequestParam(defaultValue = "1") Integer page,
                                             @RequestParam(defaultValue = "10") Integer limit,
                                             @RequestParam(defaultValue = "0") Integer state) throws InterruptedException, IllegalAccessException, NoSuchFieldException {
-        List<Activity> list = ActivityCacheUntil.getCacheOfActivityList(activity, activityService, page, limit, state);
-        //TODO 还差一个数据 查询数量
-        QueryResult<Activity> queryResult = new QueryResult<>();
-        queryResult.setList(list);
-        queryResult.setTotal(list.size());
-        queryResult.setTotalPage(0);
-        return new QueryResponseResult(CommonCodeEnum.SUCCESS,queryResult);
+
+        QueryResult queryResult =
+                ActivityCacheUntil.getCacheOfActivityList(activity, activityService, page, limit, state);
+        return new QueryResponseResult(CommonCodeEnum.SUCCESS, queryResult);
+
     }
 }

@@ -25,7 +25,6 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public List<Activity> selectActivityDetailById(ActivityForDetail activity, Integer page, Integer limit, Integer state) {
-        PageHelper.startPage(page,limit,false);
         return activityMapper.selectActivityDetailById(activity, state);
     }
 }

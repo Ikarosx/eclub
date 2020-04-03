@@ -2,10 +2,13 @@ package cn.eclubcc.common.util.activity;
 
 import cn.eclubcc.common.util.RedisUtil;
 import cn.eclubcc.pojo.activity.ActivityForDetail;
+import cn.eclubcc.pojo.http.response.QueryResult;
 import cn.eclubcc.service.ActivityService;
-import cn.eclubcc.service.HomeService;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -13,12 +16,13 @@ import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * TODO
+ *
  *
  * @author moyingren
  * @date 2020/4/2
  */
 @Slf4j
+@Component
 public class ActivityCacheUntil extends RedisUtil {
     // 首页缓存基础时间 -- 秒为单位
     public static final long BASE_EXPIRE = 60;
@@ -46,31 +50,45 @@ public class ActivityCacheUntil extends RedisUtil {
      * @throws InterruptedException
      * author: markeNick
      */
-    public static List getCacheOfActivityList(ActivityForDetail activity,ActivityService activityService,int page, int limit,Integer state) throws InterruptedException, NoSuchFieldException, IllegalAccessException {
+    public static QueryResult getCacheOfActivityList(ActivityForDetail activity,ActivityService activityService,int page, int limit,Integer state) throws InterruptedException, NoSuchFieldException, IllegalAccessException {
         List<String> list = getNoNullObjectValue(activity);//获取用来拼接key的非空字符串
+        QueryResult queryResult=new QueryResult();
         List result = null;
         if(list==null){//字符串全为空 尝试从缓存中取
-            result = RedisUtil.lGet("activityList_all_page_" + page + "_limit_" + limit, 0, -1);
-            if(result!=null){//假如缓存有 长度等于0 也要返回 防止缓存穿透
-                RedisUtil.expire("activityList_all_page_" + page + "_limit_" + limit,60);//更新过期时间 一小时
-                return result;
-            }
+            String key="activityList:all:page:" + page + ":limit:" + limit+":state:"+state;
+            if (checkedCacheData(queryResult, key)) return queryResult;
             //缓存没有查数据库
-          return selectDataFromDB(activity,activityService,page,limit,state,true);
+          return selectDataFromDB(activity,activityService,page,limit,state,true,queryResult);
         }
-
-        String activityList_page = null;
-
-        for (String s:list){//假如缓存有
-                result = RedisUtil.lGet("activityList_" + s + "_page_" + page + "_limit_" + limit, 0, -1);
-                if(result!=null){ //长度等于0 也要返回 防止缓存穿透
-                    RedisUtil.expire("activityList_" + s + "_page_" + page + "_limit_" + limit,60);//更新过期时间 一小时
-                    return result;
-                }
-            }
+        String id = activity.getId();
+        String clubId = activity.getClubId();
+        String userId = activity.getUserId();
+        //参数中至少有其中一个:活动id、clubId、userId
+        // 查询缓存
+        String key="activityList:" + id+":"
+                +clubId+":"+userId + ":page:" + page + ":limit:" + limit+":state:"+state;
+        if (checkedCacheData(queryResult, key)) return queryResult;
 
         // 缓存没有查数据库
-        return selectDataFromDB(activity,activityService,page,limit,state,false);
+        return selectDataFromDB(activity,activityService,page,limit,state,false,queryResult);
+    }
+
+    public static boolean checkedCacheData(QueryResult queryResult, String key) {
+        List result;
+        result = RedisUtil.lGet(key, 0, -1);
+        if(result!=null&&result.size()>0){//假如缓存有
+
+            long total=((Integer)RedisUtil.get(key + ":total")).longValue();
+            if(result.get(0).equals("nothing")){//缓存是无效数据
+                queryResult.setList(null);
+                queryResult.setTotal(0);
+            }else {//缓存是有效数据
+                queryResult.setList(result);
+                queryResult.setTotal(total);
+            }
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -84,35 +102,71 @@ public class ActivityCacheUntil extends RedisUtil {
      * @throws IllegalAccessException
      * @throws NoSuchFieldException
      */
-    public static List selectDataFromDB(ActivityForDetail activity,ActivityService activityService,int page, int limit,Integer state,boolean isNull) throws IllegalAccessException, NoSuchFieldException, InterruptedException {
+    public static QueryResult selectDataFromDB(ActivityForDetail activity,
+                                               ActivityService activityService,
+                                               int page, int limit, Integer state,
+                                               boolean isNull,QueryResult queryResult) throws IllegalAccessException, NoSuchFieldException, InterruptedException {
         List result = null;
         ReentrantLock lock = new ReentrantLock();
         // 成功获取锁，则从数据库获取数据
         if(lock.tryLock()) {
             try {
                 // 从数据库获取数据
+                Page<Object> objects = PageHelper.startPage(page, limit, true);
                 result = activityService.selectActivityDetailById(activity,page,limit,state);
+                long total = objects.getTotal();//记录总数
                 if (isNull){//id、clubId、userId一个都没传
-                    setCacheByList("activityList_all_page_" + page + "_limit_" + limit, result, 10);
-                }else {
-                    Object o = result.get(0);
-                    String id = getValueByObjectAndFieldName(o, "id");
-                    String clubId = getValueByObjectAndFieldName(o, "clubId");
-                    String userId = getValueByObjectAndFieldName(o, "userId");
-                    // 更新缓存 长度等于0 也要返回 防缓存穿透
-                    setCacheByList("activityList_" + id + "_page_" + page + "_limit_" + limit, result, 10);
-                    setCacheByList("activityList_" + clubId + "_page_" + page + "_limit_" + limit, result, 10);
-                    setCacheByList("activityList_" + userId + "_page_" + page + "_limit_" + limit, result, 10);
+                    String key="activityList:all:page:" + page
+                            + ":limit:" + limit+":state:"+state;
+                    if (result!=null&&result.size()>0){//数据库有数据 更新缓存
+
+                        setCacheByList(key, result, 60);//活动信息列表
+                        RedisUtil.set(key+ ":total",total,3600);//记录数
+
+                    }else { //数据库无数据 更新缓存  防缓存穿透
+
+                        result.add("nothing");//数据库无数据
+                        log.info("cn.eclubcc.common.util.activity.ActivityCacheUntil.selectDataFromDB==>查询所有活动详细信息,数据库无数据");
+                        setCacheByList(key, result, 10);//无效数据
+                        RedisUtil.set(key+ ":total",total,600);//记录数
+                    }
+
+                }else {//至少有其中一个参数id、clubId、userId
+                    String id = activity.getId();
+                    String clubId = activity.getClubId();
+                    String userId = activity.getUserId();
+                    String key="activityList:" + id
+                            + ":" + clubId + ":" + userId + ":page:" + page + ":limit:" + limit + ":state:" + state;
+
+                    if (result!=null&&result.size()>0) {//数据库有数据 更新缓存
+
+                        setCacheByList(key, result, 60);//活动信息列表
+                        RedisUtil.set(key+ ":total",total,3600);//记录数
+
+                    }else { //数据库无数据
+
+                        // 更新缓存 防止缓存穿透
+                        result.add("nothing");//数据库无数据
+                        log.info("cn.eclubcc.common.util.activity.ActivityCacheUntil.selectDataFromDB==>查询所有活动详细信息,数据库无数据");
+                        setCacheByList(key, result, 10);//无效数据
+                        RedisUtil.set(key+ ":total",total,600);//记录数
+
+                    }
+
                 }
+                if(result!=null&&result.size()>0){
+                    queryResult.setList(result);
+                }
+                queryResult.setTotal(total);
             } finally {
                 lock.unlock();
             }
         } else {    // 获取锁失败
             // 休眠100ms后，重新获取数据
             Thread.sleep(100);
-            result = getCacheOfActivityList(activity, activityService, page, limit,state);
+            queryResult = getCacheOfActivityList(activity, activityService, page, limit,state);
         }
-        return result;
+        return queryResult;
     }
 
     /**

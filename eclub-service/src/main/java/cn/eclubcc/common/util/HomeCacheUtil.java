@@ -16,9 +16,6 @@ public class HomeCacheUtil extends RedisUtil{
     // 首页缓存基础时间 -- 1分钟
     public static final long BASE_EXPIRE = 6000;
 
-    public static final int CLUBLIST_LIMIT = 10;
-
-
     /**
      * 从缓存获取数据，没有数据就去数据库获取
      * @param page

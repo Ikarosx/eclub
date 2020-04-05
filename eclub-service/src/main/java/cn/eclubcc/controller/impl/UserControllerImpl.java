@@ -50,7 +50,14 @@ public class UserControllerImpl implements UserController {
     // 检查是否可以为空
     return userService.deleteUser(id);
   }
-
+  
+  /**
+   * 权限 TODO
+   *
+   * @param id
+   * @param user
+   * @return
+   */
   @Override
   @PutMapping("/{id}")
   public ResponseResult updateUser(@PathVariable String id, @Validated User user) {
@@ -72,10 +79,15 @@ public class UserControllerImpl implements UserController {
 
   @Override
   @GetMapping("/list/{page}/{size}")
+  @PreAuthorize("hasAuthority('eclub_admin_user_list')")
   public QueryResponseResult listUsersByPage(
       @PathVariable Integer page, @PathVariable Integer size, UserQueryParam userQueryParam) {
-
-
+    if (page < 1) {
+      page = 1;
+    }
+    if (size < 0) {
+      size = 10;
+    }
     return userService.listUsersByPage(page, size, userQueryParam);
   }
 }

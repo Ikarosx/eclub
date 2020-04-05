@@ -96,13 +96,12 @@ public class UserServiceImpl implements UserService {
     // 排序 TODO
     List<Sort.Order> orders = new ArrayList<>();
     Sort sort = Sort.by(orders);
-    Pageable pageable = PageRequest.of(page, size, sort);
+    Pageable pageable = PageRequest.of(page - 1, size, sort);
     Page<User> pageUser = userRepository.findAll(example, pageable);
     QueryResult<User> queryResult = new QueryResult<>();
-    List<User> all = userRepository.findAll();
-    queryResult.setList(all);
-    queryResult.setTotal(all.size());
-    // queryResult.setTotalPage(queryResult.getTotalPage());
+    queryResult.setList(pageUser.getContent());
+    queryResult.setTotal(pageUser.getTotalElements());
+    queryResult.setTotalPage(pageUser.getTotalPages());
     return new QueryResponseResult(CommonCodeEnum.SUCCESS, queryResult);
   }
 

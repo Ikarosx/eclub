@@ -1,6 +1,6 @@
 package cn.eclubcc.config.auth;
 
-import cn.eclubcc.pojo.UserExtension;
+import cn.eclubcc.pojo.auth.UserExtension;
 import cn.eclubcc.pojo.auth.AuthUser;
 import cn.eclubcc.pojo.auth.Permission;
 import cn.eclubcc.service.UserService;

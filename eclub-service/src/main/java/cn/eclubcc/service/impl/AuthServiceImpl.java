@@ -5,7 +5,7 @@ import cn.eclubcc.common.exception.response.AuthCodeEnum;
 import cn.eclubcc.common.exception.response.CommonCodeEnum;
 import cn.eclubcc.common.util.Snowflake;
 import cn.eclubcc.dao.UserRepository;
-import cn.eclubcc.pojo.User;
+import cn.eclubcc.pojo.auth.User;
 import cn.eclubcc.pojo.auth.request.UserInfo;
 import cn.eclubcc.pojo.auth.response.Jscode2SessionResponse;
 import cn.eclubcc.pojo.auth.response.OpenIdResponse;

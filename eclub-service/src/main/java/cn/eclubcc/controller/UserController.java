@@ -1,6 +1,6 @@
 package cn.eclubcc.controller;
 
-import cn.eclubcc.pojo.User;
+import cn.eclubcc.pojo.auth.User;
 import cn.eclubcc.pojo.http.request.UserQueryParam;
 import cn.eclubcc.pojo.http.response.QueryResponseResult;
 import cn.eclubcc.pojo.http.response.ResponseResult;

@@ -2,6 +2,7 @@ package cn.eclubcc.common.exception;
 
 import cn.eclubcc.common.exception.response.AuthCodeEnum;
 import cn.eclubcc.common.exception.response.CommonCodeEnum;
+import cn.eclubcc.common.exception.response.FileCodeEnum;
 import cn.eclubcc.common.exception.response.ResultCode;
 import cn.eclubcc.pojo.http.response.ResponseResult;
 import cn.eclubcc.pojo.http.response.ValidationErrorResponse;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +50,7 @@ public class ExceptionCatch {
     builder.put(
         HttpRequestMethodNotSupportedException.class,
         CommonCodeEnum.HTTP_REQUEST_METHOD_NOT_SUPPORT_EDEXCEPTION);
+    builder.put(MaxUploadSizeExceededException.class, FileCodeEnum.FILE_TOO_LARGE);
   }
 
   /**

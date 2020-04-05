@@ -1,6 +1,5 @@
-package cn.eclubcc.pojo;
+package cn.eclubcc.pojo.auth;
 
-import cn.eclubcc.pojo.auth.Permission;
 import lombok.Data;
 
 import java.util.List;

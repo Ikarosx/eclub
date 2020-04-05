@@ -1,4 +1,4 @@
-package cn.eclubcc.pojo;
+package cn.eclubcc.pojo.auth;
 
 import lombok.Data;
 

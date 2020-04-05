@@ -8,6 +8,19 @@ server:
 spring:
     application:
         name: eclub-service
+        #SpringMVC上传文件配置
+    servlet:
+        multipart:
+            #默认支持文件上传.
+            enabled: true
+            #支持文件写入磁盘.
+            file-size-threshold: 0
+            # 上传文件的临时目录
+            location:
+            # 最大支持文件大小
+            max-file-size: 2MB
+            # 最大支持请求大小
+            max-request-size: 5MB
     datasource:
         druid:
             url: jdbc:mysql://47.112.190.215:3306/eclub?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8
@@ -37,9 +50,20 @@ spring:
                 max-wait: 1000          # 连接池最大阻塞等待时间（使用负值表示没有限制）
             shutdown-timeout: 100       # 超时连接关闭
 eclub:
+    imgDomain: http://47.112.190.215/
     auth:
         appId: wx13ba688635e7624e
         appSecret: cb8fc6b10933ad71eb4641d422764522
 mybatis:
     configuration:
         map-underscore-to-camel-case: true
+fdfs:
+    # 链接超时
+    connect-timeout: 6000
+    # 读取时间
+    so-timeout: 6000
+    # 生成缩略图参数
+    thumb-image:
+        width: 150
+        height: 150
+    tracker-list: 47.112.190.215:22122

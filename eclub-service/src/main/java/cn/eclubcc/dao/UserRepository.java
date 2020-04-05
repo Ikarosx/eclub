@@ -1,6 +1,6 @@
 package cn.eclubcc.dao;
 
-import cn.eclubcc.pojo.User;
+import cn.eclubcc.pojo.auth.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

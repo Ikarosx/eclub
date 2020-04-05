@@ -5,4 +5,6 @@ import java.util.List;
 public interface HomeService {
 
     List queryClubListLimit(Integer offset, Integer limit, String category);
+
+    long queryClubCountByCategory(String category);
 }

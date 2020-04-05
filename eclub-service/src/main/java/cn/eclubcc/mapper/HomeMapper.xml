@@ -20,9 +20,17 @@
         select distinct * from club
         where state = 0
         <if test="category != null and category != ''.toString() and category != '0'.toString() ">
-        and category = #{category}
+            and category = #{category}
         </if>
-
         order by update_time
     </select>
+    <select id="countClubList" resultType="long" parameterType="string">
+        select count(1) from club
+        where state = 0
+        <if test="category != null and category != ''.toString() and category != '0'.toString() ">
+            and category = #{category}
+        </if>
+    </select>
+
+
 </mapper>

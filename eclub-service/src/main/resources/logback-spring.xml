@@ -99,10 +99,13 @@
         </filter>
     </appender>
     
-    <logger name="org.apache.ibatis.cache.decorators.LoggingCache" level="DEBUG" additivity="false">
+    <!--    <logger name="org.apache.ibatis.cache.decorators.LoggingCache" level="DEBUG" additivity="false">-->
+    <!--        <appender-ref ref="CONSOLE"/>-->
+    <!--    </logger>-->
+    <logger name="org.springframework.boot" level="DEBUG"/>
+    <logger name="cn.eclubcc" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
-    <logger name="org.springframework.boot" level="DEBUG"/>
     <root level="info">
         <!--<appender-ref ref="ASYNC"/>-->
         <appender-ref ref="FILE"/>

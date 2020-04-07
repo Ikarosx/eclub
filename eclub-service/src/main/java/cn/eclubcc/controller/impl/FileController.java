@@ -17,6 +17,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**
+ * 权限 TODO
  * @author Ikaros
  * @date 2020/04/05 09:41
  */

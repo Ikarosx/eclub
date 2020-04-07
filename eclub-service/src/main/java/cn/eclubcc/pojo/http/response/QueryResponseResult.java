@@ -13,8 +13,13 @@ import lombok.Data;
 public class QueryResponseResult extends ResponseResult {
   private QueryResult data;
 
-  public QueryResponseResult(ResultCode resultCode, QueryResult queryResult) {
+  public QueryResponseResult(ResultCode resultCode, QueryResult data) {
     super(resultCode);
-    this.data = queryResult;
+    this.data = data;
+  }
+
+  public QueryResponseResult(int code, boolean success, String message, QueryResult data) {
+    super(code, success, message);
+    this.data = data;
   }
 }

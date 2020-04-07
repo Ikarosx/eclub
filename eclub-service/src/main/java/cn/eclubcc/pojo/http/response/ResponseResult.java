@@ -13,10 +13,16 @@ public class ResponseResult {
   boolean success;
   String message;
 
+  public ResponseResult(int code, boolean success, String message) {
+    this.code = code;
+    this.success = success;
+    this.message = message;
+  }
+
   public ResponseResult(ResultCode resultCode) {
     // enum序列化有问题
     this.code = resultCode.getCode();
-    this.success = resultCode.success();
+    this.success = resultCode.getSuccess();
     this.message = resultCode.getMessage();
   }
 }

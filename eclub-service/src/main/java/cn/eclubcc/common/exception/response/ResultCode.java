@@ -10,7 +10,7 @@ package cn.eclubcc.common.exception.response;
  * @date 2020/3/28 15:49
  */
 public interface ResultCode {
-  boolean success();
+  boolean getSuccess();
 
   int getCode();
 

@@ -101,7 +101,9 @@ public class ExceptionCatch {
   public ResponseResult exception(Exception exception) {
     // 记录日志
     log.error(
-        "catch unknown exception:{}", exception.getClass() + "------" + exception.getMessage());
+        "catch unknown exception:{}",
+        exception.getClass() + "------" + exception.getMessage(),
+        exception);
     if (EXCEPTIONS == null) {
       EXCEPTIONS = builder.build();
     }

@@ -28,7 +28,7 @@ public enum AuthCodeEnum implements ResultCode {
   private String message;
 
   @Override
-  public boolean success() {
+  public boolean getSuccess() {
     return success;
   }
 

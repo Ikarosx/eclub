@@ -6,7 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
@@ -16,20 +19,19 @@ import java.util.Date;
 @Data
 @Entity
 @Table
-public class Permission {
+public class Role {
   @Id
   @GeneratedValue(generator = "snowFlakeGenerator")
   private String id;
 
-  @NotEmpty private String code;
-  @NotEmpty private String parentId;
-  @NotEmpty private String menuName;
-  private String url;
-  private Boolean menu;
-  private Integer level;
-  private Integer sort;
+  @NotEmpty private String name;
+  private String description;
+  /** 0正常/1禁用 */
+  @Min(0)
+  @Max(1)
+  @NotNull
   private Integer state;
-  private String iconUri;
+
   private Date createTime;
   private Date updateTime;
   private String operator;

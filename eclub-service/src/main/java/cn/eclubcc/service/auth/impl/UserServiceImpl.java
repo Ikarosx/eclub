@@ -1,4 +1,4 @@
-package cn.eclubcc.service.impl;
+package cn.eclubcc.service.auth.impl;
 
 import cn.eclubcc.common.exception.ExceptionCast;
 import cn.eclubcc.common.exception.response.CommonCodeEnum;
@@ -9,11 +9,11 @@ import cn.eclubcc.pojo.auth.User;
 import cn.eclubcc.pojo.auth.UserExtension;
 import cn.eclubcc.pojo.auth.Permission;
 import cn.eclubcc.pojo.auth.response.UserResponse;
-import cn.eclubcc.pojo.http.request.UserQueryParam;
+import cn.eclubcc.pojo.auth.request.UserQueryParam;
 import cn.eclubcc.pojo.http.response.QueryResponseResult;
 import cn.eclubcc.pojo.http.response.QueryResult;
 import cn.eclubcc.pojo.http.response.ResponseResult;
-import cn.eclubcc.service.UserService;
+import cn.eclubcc.service.auth.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
   @Override
   public ResponseResult updateUser(User user) {
     Optional<User> optional = userRepository.findById(user.getId());
-    User newUser = optional.orElseGet(null);
+    User newUser = optional.orElse(null);
     if (newUser == null) {
       ExceptionCast.cast(UserCodeEnum.USER_NOT_EXIST);
     }

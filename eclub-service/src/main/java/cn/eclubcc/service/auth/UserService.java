@@ -1,8 +1,8 @@
-package cn.eclubcc.service;
+package cn.eclubcc.service.auth;
 
 import cn.eclubcc.pojo.auth.User;
 import cn.eclubcc.pojo.auth.UserExtension;
-import cn.eclubcc.pojo.http.request.UserQueryParam;
+import cn.eclubcc.pojo.auth.request.UserQueryParam;
 import cn.eclubcc.pojo.http.response.QueryResponseResult;
 import cn.eclubcc.pojo.http.response.ResponseResult;
 

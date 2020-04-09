@@ -5,8 +5,10 @@ package cn.eclubcc.common.exception.response;
  * @date 2020/4/1 17:22
  */
 public enum UserCodeEnum implements ResultCode {
-  /** 用户代码30100 */
-  USER_NOT_EXIST(false, 30101, "用户不存在");
+  /** 用户、角色、权限代码30100 */
+  USER_NOT_EXIST(false, 30101, "用户不存在"),
+  ROLE_NOT_EXIST(false, 30102, "用户不存在"),
+  PERMISSION_NOT_EXIST(false, 30103, "用户不存在");
 
   UserCodeEnum(boolean success, int code, String message) {
     this.success = success;

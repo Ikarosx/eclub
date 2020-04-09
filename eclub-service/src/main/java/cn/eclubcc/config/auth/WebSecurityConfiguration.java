@@ -23,7 +23,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @Configuration
 @EnableWebSecurity
 @EnableRedisHttpSession
-// @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
   @Qualifier(value = "UserDetailsServiceImpl")
   @Autowired

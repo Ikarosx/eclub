@@ -1,5 +1,6 @@
-package cn.eclubcc.pojo.http.request;
+package cn.eclubcc.pojo.auth.request;
 
+import cn.eclubcc.pojo.http.request.RequestData;
 import lombok.Data;
 
 import javax.validation.constraints.Max;

@@ -3,7 +3,7 @@ package cn.eclubcc.config.auth;
 import cn.eclubcc.pojo.auth.UserExtension;
 import cn.eclubcc.pojo.auth.AuthUser;
 import cn.eclubcc.pojo.auth.Permission;
-import cn.eclubcc.service.UserService;
+import cn.eclubcc.service.auth.UserService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;

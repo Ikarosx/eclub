@@ -1,12 +1,12 @@
-package cn.eclubcc.controller.impl;
+package cn.eclubcc.controller.auth.impl;
 
 import cn.eclubcc.common.util.SecurityUtils;
-import cn.eclubcc.controller.UserController;
+import cn.eclubcc.controller.auth.UserController;
 import cn.eclubcc.pojo.auth.User;
-import cn.eclubcc.pojo.http.request.UserQueryParam;
+import cn.eclubcc.pojo.auth.request.UserQueryParam;
 import cn.eclubcc.pojo.http.response.QueryResponseResult;
 import cn.eclubcc.pojo.http.response.ResponseResult;
-import cn.eclubcc.service.UserService;
+import cn.eclubcc.service.auth.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class UserControllerImpl implements UserController {
   @PreAuthorize("hasAuthority('eclub_admin_user_add')")
   public ResponseResult insertUser(@Validated User user) {
     log.info("insert user is:{}", user);
-    user.setOperator(SecurityUtils.getUserId());
+    // user.setOperator(SecurityUtils.getUserId());
     user.setId(null);
     user.setCreateTime(new Date());
     user.setUpdateTime(user.getCreateTime());
@@ -51,16 +51,17 @@ public class UserControllerImpl implements UserController {
   }
 
   /**
-   * 权限 TODO
+   * 直接请求该方法需要权限
    *
-   * @param id
    * @param user
    * @return
    */
   @Override
-  @PutMapping("/{id}")
-  public ResponseResult updateUser(@PathVariable String id, @Validated User user) {
-    user.setOperator(SecurityUtils.getUserId());
+  @PutMapping
+  @PreAuthorize("hasAuthority('eclub_admin_user_update')")
+  public ResponseResult updateUserByAdmin(@Validated User user) {
+    // 更新
+    user.setOpenId(SecurityUtils.getUserId());
     String password = user.getPassword();
     if (StringUtils.isNotBlank(password)) {
       user.setPassword(passwordEncoder.encode(password));
@@ -70,9 +71,17 @@ public class UserControllerImpl implements UserController {
   }
 
   @Override
+  @PutMapping("/{id}")
+  public ResponseResult updateUser(@PathVariable String id, @Validated User user) {
+    // ID设置为当前登录用户的ID
+    user.setId(SecurityUtils.getUserId());
+    return updateUserByAdmin(user);
+  }
+
+  @Override
   @DeleteMapping
   @PreAuthorize("hasAuthority('eclub_admin_user_delete')")
-  public ResponseResult deleteUserByIds(List<String> ids) {
+  public ResponseResult deleteUserByIds(@RequestParam List<String> ids) {
     return userService.deleteUserByIds(ids);
   }
 

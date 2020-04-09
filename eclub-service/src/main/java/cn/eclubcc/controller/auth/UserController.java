@@ -1,7 +1,7 @@
-package cn.eclubcc.controller;
+package cn.eclubcc.controller.auth;
 
 import cn.eclubcc.pojo.auth.User;
-import cn.eclubcc.pojo.http.request.UserQueryParam;
+import cn.eclubcc.pojo.auth.request.UserQueryParam;
 import cn.eclubcc.pojo.http.response.QueryResponseResult;
 import cn.eclubcc.pojo.http.response.ResponseResult;
 import io.swagger.annotations.Api;
@@ -21,8 +21,11 @@ public interface UserController {
   @ApiOperation(value = "通过用户ID删除用户")
   ResponseResult deleteUser(String id);
 
-  @ApiOperation(value = "更新用户")
+  @ApiOperation(value = "更新用户", notes = "此更新接口供所有人使用，只更新自己用户，无需授权")
   ResponseResult updateUser(String id, User user);
+
+  @ApiOperation(value = "管理员更新用户", notes = "此更新接口供管理员使用，需授权")
+  ResponseResult updateUserByAdmin(User user);
 
   @ApiOperation(value = "通过用户ID列表删除用户列表")
   ResponseResult deleteUserByIds(List<String> ids);

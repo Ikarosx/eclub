@@ -31,7 +31,7 @@
         <!-- pagehelper -->
         <pagehelper-spring-boot.version>1.2.12</pagehelper-spring-boot.version>
         <!-- guava -->
-        <guava.version>24.0-jre</guava.version>
+        <guava.version>24.1.1-jre</guava.version>
         <redis.version>2.2.3.RELEASE</redis.version>
         <spring-session.version>2.2.2.RELEASE</spring-session.version>
     </properties>
